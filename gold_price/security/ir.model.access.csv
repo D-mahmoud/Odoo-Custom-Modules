@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gold_price_gold_price,gold_price.gold_price,model_gold_price_gold_price,base.group_user,1,1,1,1
+access_gold_price,gold.price,model_gold_price,base.access_web_tour_tour_admin,1,1,1,1

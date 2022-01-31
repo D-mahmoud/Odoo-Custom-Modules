@@ -1,0 +1,36 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="gold_price_list2">
+      <field name="name">gold.price</field>
+      <field name="model">gold.price</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="gold_price"/>
+          <field name="today"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="gold_price_id">
+      <field name="name">gold.price</field>
+      <field name="model">gold.price</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+        <form string="gold price form">
+          <!-- <button name="update_price" string="Update Price" type="object" class="oe_highlight"/> -->
+          <group colspan="2" col="2">
+            <separator string="General Info" colspan="2"/>
+            <field name="gold_price"/>
+            <field name="today"/>
+            <!-- <field name="name"/> -->
+          </group>
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="gold_price.gold_price">
+      <field name="name">gold.price</field>
+      <field name="res_model">gold.price</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Gold Price today" id="gold_price.gold_price_list" parent="stock.menu_stock_inventory_control" action="gold_price.gold_price" />
+  </data>
+</odoo>
