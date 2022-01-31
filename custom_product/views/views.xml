@@ -1,92 +1,35 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="custom_product.list">
-      <field name="name">custom_product list</field>
-      <field name="model">custom_product.custom_product</field>
+
+    <record model="ir.ui.view" id="product_view_inherit">
+      <field name="name">product.view.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <xpath expr="//field[@name='barcode']" position="after">
+          <field name="karat" />
+
+          <field name="has_stones"/>
+
+        </xpath>
       </field>
     </record>
--->
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="custom_product.action_window">
-      <field name="name">custom_product window</field>
-      <field name="res_model">custom_product.custom_product</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="custom_product.action_server">
-      <field name="name">custom_product server</field>
-      <field name="model_id" ref="model_custom_product_custom_product"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
+
+    <record model="ir.ui.view" id="stock_view_inherit">
+      <field name="name">stock.view.inherit</field>
+      <field name="model">stock.production.lot</field>
+      <field name="inherit_id" ref="stock.view_production_lot_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='ref']" position="after">
+          <field name="gross_weight" />
+        </xpath>
+        <xpath expr="//field[@name='ref']" position="after">
+          <field name="net_weight" />
+        </xpath>
       </field>
     </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="custom_product" id="custom_product.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="custom_product.menu_1" parent="custom_product.menu_root"/>
-    <menuitem name="Menu 2" id="custom_product.menu_2" parent="custom_product.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="custom_product.menu_1_list" parent="custom_product.menu_1"
-              action="custom_product.action_window"/>
-    <menuitem name="Server to list" id="custom_product" parent="custom_product.menu_2"
-              action="custom_product.action_server"/>
--->
-
-
-<record model="ir.ui.view" id="product_view_inherit">
-  <field name="name">product.view.inherit</field>
-  <field name="model">product.template</field>
-  <field name="inherit_id" ref="product.product_template_only_form_view"/>
-  <field name="arch" type="xml">
-    <xpath expr="//field[@name='barcode']" position="after">
-            <field name="karat" />
-            
-            <field name="has_stones"/>
-            
-    </xpath> 
-    </field>
-</record>
-
-
-  
-<record model="ir.ui.view" id="stock_view_inherit">
-  <field name="name">stock.view.inherit</field>
-  <field name="model">stock.production.lot</field>
-  <field name="inherit_id" ref="stock.view_production_lot_form"/>
-  <field name="arch" type="xml">
-    <xpath expr="//field[@name='ref']" position="after">
-            <field name="gross_weight" />
-    </xpath>
-    <xpath expr="//field[@name='ref']" position="after">
-      <field name="net_weight" />
-    </xpath>
-  </field>
-</record>  
 
 
   </data>
