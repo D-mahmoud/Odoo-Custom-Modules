@@ -1,62 +1,27 @@
-	<odoo>
+<odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="custome.list">
-      <field name="name">custome list</field>
-      <field name="model">custome.custome</field>
+
+
+    <record model="ir.ui.view" id="sale_order_view_inherit">
+      <field name="name">sale.order.view.inherit1</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="before">
+          <field name="serial"/>
+        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+          <field name="karats"/>
+
+        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+          <field name="net_weight"/>
+          <field name="making_price"/>
+          <field name="gold_price"/>
+
+        </xpath>
       </field>
     </record>
--->
-
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="custome.action_window">
-      <field name="name">custome window</field>
-      <field name="res_model">custome.custome</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="custome.action_server">
-      <field name="name">custome server</field>
-      <field name="model_id" ref="model_custome_custome"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="custome" id="custome.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="custome.menu_1" parent="custome.menu_root"/>
-    <menuitem name="Menu 2" id="custome.menu_2" parent="custome.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="custome.menu_1_list" parent="custome.menu_1"
-              action="custome.action_window"/>
-    <menuitem name="Server to list" id="custome" parent="custome.menu_2"
-              action="custome.action_server"/>
--->
-
 
   </data>
 </odoo>
