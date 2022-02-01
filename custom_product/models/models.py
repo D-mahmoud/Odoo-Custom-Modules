@@ -28,7 +28,7 @@ class Product(models.Model):
         ('21', '21k')], string='Karat')
 
    
-    test_case = fields.Boolean('test')
+    # test_case = fields.Boolean('test')
 
     has_stones = fields.Boolean('Stones Weight Included')
 
