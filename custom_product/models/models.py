@@ -3,9 +3,9 @@
 from odoo import models, fields, api
 
 
-# class custom_product(models.Model):
-#     _name = 'custom_product.custom_product'
-#     _description = 'custom_product.custom_product'
+class custom_product(models.Model):
+    _name = 'custom_product.custom_product'
+    _description = 'custom_product.custom_product'
 
 #     name = fields.Char()
 #     value = fields.Integer()
