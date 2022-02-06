@@ -9,4 +9,4 @@ class goldPrice(models.Model):
     today = fields.Datetime(string='Gold Price Date', required=True, default= fields.datetime.now())
     name = fields.Char(string="Name", required=False, help="Write your name")
 
-   
+#osama
