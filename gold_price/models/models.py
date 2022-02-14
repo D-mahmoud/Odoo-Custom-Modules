@@ -9,4 +9,4 @@ class goldPrice(models.Model):
     day = fields.Date(string="Active From Date",required=True)
     
 
-   
+#osama
