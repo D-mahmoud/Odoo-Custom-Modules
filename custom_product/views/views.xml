@@ -10,6 +10,8 @@
           <field name="karat" />
 
           <field name="has_stones"/>
+          <field name="has_stones_price"/>
+          
 
         </xpath>
       </field>

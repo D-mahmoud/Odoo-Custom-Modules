@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Gold Price",
+    'name': "custom-lot",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale','purchase','web','website','sale_management','stock','sale_stock', 'sale_management', 'website_sale', 'website_mail'],
+    'depends': ['base','stock','sale_stock'],
 
     # always loaded
     'data': [
