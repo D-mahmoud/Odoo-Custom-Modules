@@ -8,7 +8,6 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='barcode']" position="after">
           <field name="karat" />
-
           <field name="has_stones"/>
           <field name="has_stones_price"/>
           
@@ -34,7 +33,18 @@
     </record>
 
     
+    <!-- <record model="ir.ui.view" id="res_partner_inherit1 ">
+      <field name="name">res.partner.inherit</field>
+      <field name="model">res.partner.lot</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='parent_id']" position="after">
+          <field name="x_group" />
+        </xpath>
+        
+      </field>
+    </record> -->
 
-
+    
   </data>
 </odoo>

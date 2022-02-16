@@ -41,4 +41,12 @@ class SaleOrder(models.Model):
             rec.karats = karat
             rec.product_id=prod 
 
-  
+
+class due(models.Model):
+    _inherit = 'res.partner'
+
+
+    group = fields.Selection(
+    string='Vendor Group',
+    selection=  [('option1', 'Local'),
+                ('option2', 'External')],)
