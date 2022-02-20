@@ -3,16 +3,25 @@
 from odoo import models, fields, api
 
 
-
-
 class Product(models.Model):
     _inherit = 'product.template'
     
+    karat = fields.Selection(
+    string='Karat',
+    selection=  [('9', '9'),
+                ('12', '12'),
+                ('14', '14'),
+                ('18', '18'),
+                ('21', '21'),
+                ('22', '22')],)
+                
 
-    karat = fields.Selection([
-                        ('21', '21K'),
-                        ('18', '18K')], string="Karat")
-    karat2 = fields.Char(string="Karat")
+    # karat = fields.Many2one(
+    #     string='Karat',
+    #     comodel_name='gold.price',
+    #     ondelete='restrict',
+    #     index=True)
+
     # test_case = fields.Boolean('test')
 
     has_stones = fields.Boolean('Stones Weight Included')
