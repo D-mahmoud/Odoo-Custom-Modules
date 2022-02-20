@@ -22,7 +22,7 @@
         </xpath>
       </field>
     </record>
-
+<!-- 
     <record model="ir.ui.view" id="res_partner_inherit1">
       <field name="name">res.partner.inherit</field>
       <field name="model">res.partner</field>
@@ -33,37 +33,36 @@
         </xpath>
         
       </field>
-    </record>
+    </record> -->
 
-    <record model="ir.ui.view" id="purchase_order_view_inherit1">
+    <record model="ir.ui.view" id="purchase_order_view_inherit">
       <field name="name">purchase.order.view.inherit1</field>
       <field name="model">purchase.order</field>
       <field name="inherit_id" ref="purchase.purchase_order_form"/>
       <field name="arch" type="xml">
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="before">
-                <field name="karats" readonly="1" force_save="1" />
+                <field name="karats"  force_save="1" />
                 <field name="gold_price"  readonly="1" force_save="1" />
 
         </xpath>
       </field>
   </record>
 
-  <record model="ir.ui.view" id="product_view_inherit3">
+  <!-- <record model="ir.ui.view" id="product_view_inherit3">
     <field name="name">product.view.inherit</field>
     <field name="model">product.template</field>
     <field name="inherit_id" ref="product.product_template_only_form_view"/>
     <field name="arch" type="xml">
       <xpath expr="//field[@name='barcode']" position="after">
         <field name="karat" />
-        <field name="karat2" />
         <field name="has_stones"/>
         <field name="has_stones_price"/>
         
 
       </xpath>
     </field>
-  </record>
+  </record> -->
  
 
 

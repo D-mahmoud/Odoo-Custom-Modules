@@ -18,3 +18,4 @@ class goldPrice(models.Model):
         self.env['gold.price'].search([('karat','=',self.karat),('id' ,'!=',self.id)]).write({'active': False })
         # self.text = last_id
         # self.active = True
+

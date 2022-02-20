@@ -58,27 +58,29 @@ class Serial(models.Model):
     'Net Weight',
     digits=(12,4) )
     
-class due(models.Model):
-    _inherit = 'res.partner'
 
-
-    group = fields.Selection(
-    string='Vendor Group',
-    selection=  [('option1', 'Local'),
-                ('option2', 'External')],)
 
 
 
 class Karat(models.Model):
     _inherit = 'purchase.order.line'
     gold_price =fields.Float('Gold Price',digits=(12,4),readonly=True,store = True)
-    karats = fields.Char('Karat',readonly=True,store = True)
+    karats = fields.Char('Karat',store = True)
     
 
-    @api.onchange('product_id')
-    def get_data(self):
 
-        karat = self.env['product.template'].search([('id', '=', self.product_id.id)]).karat
-        self.karats = karat
-        price = 12
-        self.gold_price = price
+class Karat(models.Model):
+    _inherit = 'purchase.order'
+   
+
+    @api.onchange('order_line')
+    def get_data(self):
+        
+        product_template = self.env['product.template']
+        product_product = self.env['product.product']
+        for rec in self.order_line:
+            product_templ = product_product.search([('id', '=', rec.product_id.id)]).product_tmpl_id.karat
+            # product_karat = product_template.search([('id', '=', rec.product_templ.id)]).karat
+            rec.karats = product_templ
+            price = 12
+            rec.gold_price = price

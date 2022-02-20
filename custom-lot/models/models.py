@@ -82,3 +82,4 @@ class lot(models.Model):
             
             
 
+
