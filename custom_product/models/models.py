@@ -3,18 +3,20 @@
 from odoo import models, fields, api
 
 
+
+
 class Product(models.Model):
     _inherit = 'product.template'
     
 
-    karat = fields.Many2one(string='Karat', comodel_name='gold.price',)
-
+    karat = fields.Selection([
+                        ('21', '21K'),
+                        ('18', '18K')], string="Karat")
+    karat2 = fields.Char(string="Karat")
     # test_case = fields.Boolean('test')
 
     has_stones = fields.Boolean('Stones Weight Included')
     has_stones_price = fields.Boolean('Stones Price Included')
-
-
 
 class Serial(models.Model):
     _inherit = 'stock.production.lot'
@@ -25,18 +27,22 @@ class Serial(models.Model):
     'Net Weight',
     digits=(12,4) )
     
-
-# class due(models.Model):
-#     _inherit = 'res.partner'
-#     total_due =fields.Float(
-#     'Gross Weight',
-#     digits=(12,4) )
+class PurchaseOrderLine(models.Model):
+    _inherit = 'purchase.order.line'
+    karats = fields.Char(
+        string='Karat',
+        readonly=True
+    )
+    gold_price = fields.Float(
+        string='Gold Price',
+        readonly=True
+    )
     
-
-# class Karat(models.Model):
-#     _name = 'custom_product.karat'
-
-#     karat = fields.Integer(string="Karat", required=True)
-#     price = fields.Float(string="Price", required=True,  digits=(12,4),  ondelete='restrict',)
-#     date = fields.Date(string="Active From Date",required=True, ondelete='restrict',)
+    @api.onchange('product_qty')
+    def product_change(self):
+        # prod = self.product_id.id
+        product_karat = self.env['product.template'].search([('id', '=', self.product_id.id)])
+      
+     
+        self.karats = product_karat.karat2
     

@@ -1,13 +1,15 @@
 <odoo>
   <data>
     <record model="ir.ui.view" id="gold_price_list2">
-      <field name="name">gold.price</field>
+      <field name="name">Gold Price</field>
       <field name="model">gold.price</field>
       <field name="arch" type="xml">
         <tree>
           <field name="karat"/>
           <field name="gold_price"/>
           <field name="day"/>
+          <field name="active" widget="boolean_toggle"/>
+
         </tree>
       </field>
     </record>
@@ -17,14 +19,17 @@
       <field name="priority" eval="16"/>
       <field name="arch" type="xml">
         <form string="gold price form">
-          <!-- <button name="update_price" string="Update Price" type="object" class="oe_highlight"/> -->
+          <button name="create_record" string="Update Price" type="object" class="oe_highlight"/>
+          <sheet>
           <group colspan="2" col="2">
             <separator string="General Info" colspan="2"/>
             <field name="karat"/>
             <field name="gold_price"/>
             <field name="day"/>
-            
+            <field name="active" widget="boolean_toggle"/>
+            <!-- <field name="te    `xt"/> -->
           </group>
+        </sheet>
         </form>
       </field>
     </record>

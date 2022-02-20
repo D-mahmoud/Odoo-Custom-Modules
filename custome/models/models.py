@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from logging import NullHandler
+from logging import NullHandler,info
+import itertools
 
 
 
@@ -41,4 +42,19 @@ class SaleOrder(models.Model):
             rec.karats = karat
             rec.product_id=prod 
 
-  
+
+
+    
+
+
+
+
+class Serial(models.Model):
+    _inherit = 'stock.production.lot'
+    gross_weight =fields.Float(
+    'Gross Weight',
+    digits=(12,4) )
+    net_weight =fields.Float(
+    'Net Weight',
+    digits=(12,4) )
+    
