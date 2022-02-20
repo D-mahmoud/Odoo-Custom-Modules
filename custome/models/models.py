@@ -50,3 +50,19 @@ class due(models.Model):
     string='Vendor Group',
     selection=  [('option1', 'Local'),
                 ('option2', 'External')],)
+
+
+
+class Karat(models.Model):
+    _inherit = 'purchase.order.line'
+    gold_price =fields.Float('Gold Price',digits=(12,4),readonly=True,store = True)
+    karats = fields.Char('Karat',readonly=True,store = True)
+    
+
+    @api.onchange('product_id')
+    def get_data(self):
+
+        karat = self.env['product.template'].search([('id', '=', self.product_id.id)]).karat
+        self.karats = karat
+        price = 12
+        self.gold_price = price
