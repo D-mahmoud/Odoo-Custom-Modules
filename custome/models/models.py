@@ -82,5 +82,5 @@ class Karat(models.Model):
             product_templ = product_product.search([('id', '=', rec.product_id.id)]).product_tmpl_id.karat
             # product_karat = product_template.search([('id', '=', rec.product_templ.id)]).karat
             rec.karats = product_templ
-            price = 12
+            price = self.env['gold.price'].search([('karat', '=', product_templ),('active','=', True)]).gold_price
             rec.gold_price = price
