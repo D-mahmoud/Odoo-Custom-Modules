@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_gold_payment_customer,gold.payment.customer,model_gold_payment_customer,base.group_user,1,1,1,1
 access_gold_payment_vendor,gold.payment.vendor,model_gold_payment_vendor,base.group_user,1,1,1,1
+access_gold_payment_vend,gold.payment.vend,model_gold_payment_vend,base.group_user,1,1,1,1

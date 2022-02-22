@@ -1,10 +1,12 @@
 <odoo>
     <data>
-        <record model="ir.ui.view" id="gold_payment_vend">
+        <record model="ir.ui.view" id="gold_payment_cust4">
             <field name="name">Gold Payment for Vendor</field>
-            <field name="model">gold.payment.vendor</field>
+            <field name="model">gold.payment.customer</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="trancaction_id"/>
+                    <field name="date"/>
                     <field name="vendor"/>
                     <field name="product"/>
                     <field name="warehouse"/>
@@ -13,29 +15,38 @@
                 </tree>
             </field>
         </record>
-        <record model="ir.ui.view" id="gold_payment_vend_form">
+        <record model="ir.ui.view" id="gold_payment_cust_form4">
             <field name="name">Gold Payment for Vendor</field>
-            <field name="model">gold.payment.vendor</field>
-            <field name="priority" eval="16"/>
+            <field name="model">gold.payment.customer</field>
+            <field name="priority" eval="10"/>
             <field name="arch" type="xml">
                 <form string="gold payment form">
-
-                    <group colspan="2" col="2">
-                        <separator string="Payment Info" colspan="2"/>
+                    <sheet>
+                        <group >
+                        
+                        <field name="trancaction_id"/>
+                        <field name="date"/>
                         <field name="vendor"/>
-                        <field name="product"/>
+                        
+                        <field name="product" />
                         <field name="warehouse"/>
                         <field name="debit_qty"/>
                         <field name="credit_qty"/>
-                    </group>
+                        
+
+                             
+                        </group>  
+                       
+                </sheet>
                 </form>
             </field>
         </record>
-        <record model="ir.actions.act_window" id="custome.gold_pay_vend">
+        <record model="ir.actions.act_window" id="custome.gold_payment_list4">
             <field name="name">Gold Payment for Vendor</field>
-            <field name="res_model">gold.payment.vendor</field>
+            <field name="res_model">gold.payment.customer</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem name="Gold Payment for Vendor" id="custome.gold_payment_vend" parent="purchase.menu_procurement_management" action="custome.gold_pay_vend"/>
+        <menuitem name="Gold Payment for Vendor"  id="custome.gold_payment_list5" parent="purchase.menu_procurement_management" action="custome.gold_payment_list4"/>
     </data>
 </odoo>
+       

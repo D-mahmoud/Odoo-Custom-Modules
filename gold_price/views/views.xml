@@ -8,6 +8,7 @@
           <field name="karat"/>
           <field name="gold_price"/>
           <field name="day"/>
+          <field name="conversion_karat"/>
           <field name="active" widget="boolean_toggle"/>
 
         </tree>
@@ -19,16 +20,20 @@
       <field name="priority" eval="16"/>
       <field name="arch" type="xml">
         <form string="gold price form">
-          <button name="create_record" string="Update Price" type="object" class="oe_highlight"/>
+          <!-- <button name="create_record" string="Update Price" type="object" class="oe_highlight"/> -->
           <sheet>
-          <group colspan="2" col="2">
+            <group >
+              
             <separator string="General Info" colspan="2"/>
             <field name="karat"/>
+            
             <field name="gold_price"/>
-            <field name="day"/>
+            <field name="conversion_karat"/>
+            <field name="day" />
             <field name="active" widget="boolean_toggle"/>
             <!-- <field name="te    `xt"/> -->
           </group>
+
         </sheet>
         </form>
       </field>

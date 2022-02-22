@@ -5,7 +5,13 @@ from logging import NullHandler
 class goldPaymentCustomer(models.Model):
     _name = "gold.payment.customer"
     _description = 'gold payment for customers'
-
+    trancaction_id = fields.Char(string="Transaction Num" , required=True)
+    date = fields.Datetime(string="Date" , required=True)
+    vendor = fields.Many2one(
+        string='Vendor',
+        comodel_name='res.partner',
+        required=True,
+    )
     customer = fields.Many2one(
         string='Customer',
         comodel_name='res.partner',

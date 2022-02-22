@@ -49,6 +49,23 @@
       </field>
   </record>
 
+  <!-- <record model="ir.ui.view" id="gold_payment_cust_form1">
+    <field name="name">gold.payment.customer.view.inherit1</field>
+    <field name="model">gold.payment.customer</field>
+    <field name="inherit_id" ref="custome.gold_payment_cust_form"/>
+    <field name="arch" type="xml">
+
+      <xpath expr="//sheet" position="inside">
+        <separator string="Payment Info" colspan="2"/>
+
+        <field name="customer"/>
+        <field name="product"/>
+        <field name="warehouse"/>
+        <field name="debit_qty"/>
+        <field name="credit_qty"/>
+      </xpath>
+    </field>
+</record> -->
   <!-- <record model="ir.ui.view" id="product_view_inherit3">
     <field name="name">product.view.inherit</field>
     <field name="model">product.template</field>
