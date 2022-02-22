@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 class goldPrice(models.Model):
     _name = 'gold.price'
     _description = 'gold price'
+<<<<<<< HEAD
     karat = fields.Selection(
         selection=  [('9', '9'),
                 ('12', '12'),
@@ -26,6 +27,9 @@ class goldPrice(models.Model):
                 ('22', '22')],
         string="Conversion Karat",
         required=True)
+=======
+    karat = fields.Selection([('21K','21K'),('18K','18K')],string="Karat", required=True)
+>>>>>>> parent of 0f2801e... gold price
     gold_price = fields.Float(string='Gold Price' ,required=True,help="set gold price to day")
     day= fields.Datetime(string="Active From Date",required=True , default = lambda self : fields.datetime.now()   )
     active = fields.Boolean(string="Active")

@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="gold_payment_vend">
+            <field name="name">Gold Payment for Vendor</field>
+            <field name="model">gold.payment.vendor</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="vendor"/>
+                    <field name="product"/>
+                    <field name="warehouse"/>
+                    <field name="debit_qty"/>
+                    <field name="credit_qty"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="gold_payment_vend_form">
+            <field name="name">Gold Payment for Vendor</field>
+            <field name="model">gold.payment.vendor</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <form string="gold payment form">
+
+                    <group colspan="2" col="2">
+                        <separator string="Payment Info" colspan="2"/>
+                        <field name="vendor"/>
+                        <field name="product"/>
+                        <field name="warehouse"/>
+                        <field name="debit_qty"/>
+                        <field name="credit_qty"/>
+                    </group>
+         
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="gold_payment.gold_pay_vend">
+            <field name="name">Gold Payment for Vendor</field>
+            <field name="res_model">gold.payment.vendor</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Gold Payment for Vendor" id="gold_payment.gold_payment_vend" parent="purchase.menu_procurement_management" action="gold_payment.gold_pay_vend"/>
+    </data>
+</odoo>
