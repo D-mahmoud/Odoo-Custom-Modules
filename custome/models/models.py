@@ -69,18 +69,25 @@ class Karat(models.Model):
     
 
 
-class Karat(models.Model):
-    _inherit = 'purchase.order'
+# class Karat(models.Model):
+#     _inherit = 'purchase.order'
    
 
-    @api.onchange('order_line')
-    def get_data(self):
+#     @api.onchange('order_line')
+#     def get_data(self):
         
-        product_template = self.env['product.template']
-        product_product = self.env['product.product']
-        for rec in self.order_line:
-            product_templ = product_product.search([('id', '=', rec.product_id.id)]).product_tmpl_id.karat
-            # product_karat = product_template.search([('id', '=', rec.product_templ.id)]).karat
-            rec.karats = product_templ
-            price = self.env['gold.price'].search([('karat', '=', product_templ),('active','=', True)]).gold_price
-            rec.gold_price = price
+#         product_template = self.env['product.template']
+#         product_product = self.env['product.product']
+#         for rec in self.order_line:
+#             product_templ = product_product.search([('id', '=', rec.product_id.id)]).product_tmpl_id.karat
+#             # product_karat = product_template.search([('id', '=', rec.product_templ.id)]).karat
+#             rec.karats = product_templ
+#             price = self.env['gold.price'].search([('karat', '=', product_templ),('active','=', True)]).gold_price
+#             rec.gold_price = price
+    
+#     tax_karat_json = fields.Char(compute='_compute_karat_totals_json')
+
+#     @api.onchange('order_line')
+#     def  _compute_karat_totals_json(self):
+#         calc = "omaradel"
+#         return calc

@@ -17,17 +17,7 @@ class Product(models.Model):
                 ('21', '21'),
                 ('22', '22')],)
                 
-    # karat2 = fields.Char(
-    #     string='Karat',
-    #     readonly=True
-    # )
-    # karat = fields.Many2one(
-    #     string='Karat',
-    #     comodel_name='gold.price',
-    #     ondelete='restrict',
-    #     index=True)
 
-    # test_case = fields.Boolean('test')
 
     has_stones = fields.Boolean('Stones Weight Included')
     has_stones_price = fields.Boolean('Stones Price Included')
@@ -47,22 +37,21 @@ class Serial(models.Model):
     'Net Weight',
     digits=(12,4) )
     
-# class PurchaseOrderLine(models.Model):
-#     _inherit = 'purchase.order.line'
-#     karats = fields.Char(
-#         string='Karat',
-#         readonly=True
-#     )
+
+   
+
+        # account_move = self.env['account.move']
+        # for order in self:
+        #     tax_lines_data = account_move._prepare_tax_lines_data_for_totals_from_object(order.order_line, compute_karat)
+        #     tax_totals = account_move._get_tax_totals(order.partner_id, tax_lines_data, order.amount_total, order.amount_untaxed, order.currency_id)
+        #     order.tax_totals_json = json.dumps(tax_totals)
+
+
     
-#     gold_price = fields.Float(
-#         string='Gold Price',
-#         readonly=True
-#     )
-    
-#     @api.onchange('product_qty')
-#     def product_change(self):
-#         # prod = self.product_id.id
-#         product_karat = self.env['product.template'].search([('id', '=', self.product_id.id)])
+    # @api.onchange('product_qty')
+    # def product_change(self):
+    #     # prod = self.product_id.id
+    #     product_karat = self.env['product.template'].search([('id', '=', self.product_id.id)])
       
      
     
