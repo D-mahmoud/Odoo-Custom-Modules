@@ -47,7 +47,7 @@ class SaleOrder(models.Model):
             purchase.k18 = line_weight18
             purchase.k21 = line_weight21
             purchase.k22 = line_weight22
-            purchase.k14 = line_weight24
+            purchase.k24 = line_weight24
    
           
     @api.onchange('order_line')
