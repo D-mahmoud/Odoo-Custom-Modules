@@ -19,6 +19,7 @@ class Product(models.Model):
                 
  
 
+
     has_stones = fields.Boolean('Stones Weight Included')
     has_stones_price = fields.Boolean('Stones Price Included')
     
