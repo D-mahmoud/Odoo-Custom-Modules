@@ -7,22 +7,54 @@
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_order_form"/>
       <field name="arch" type="xml">
+        <xpath expr="//field[@name='payment_term_id']" position="after">
+          <field name="sale_mode"/>
+        </xpath>
+        <xpath expr="//page[@name='customer_signature']" position="after">
+          <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
+          <page string="Total Gold" name="total_gold" >
+            <group>
+              
+              <field name="showd"/>
+
+            </group>
+        </page>
+        </xpath>
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="before">
           <field name="serial"/>
         </xpath>
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
-          <field name="karats"/>
 
-        </xpath>
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
-          <field name="net_weight"/>
+       <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
           <field name="making_price"/>
-          <field name="gold_price"/>
-
         </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+          <field name="karats"/>
+          <!-- <field name="sale_sale"/> -->
+
+          <field name="gold_price"/>
+          <field name="weight"/>
+        </xpath>
+      
       </field>
     </record>
-<!-- 
+    <!-- 
     <record model="ir.ui.view" id="res_partner_inherit1">
       <field name="name">res.partner.inherit</field>
       <field name="model">res.partner</field>
@@ -42,14 +74,14 @@
       <field name="arch" type="xml">
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="before">
-                <field name="karats" readonly="1" force_save="1" />
-                <field name="gold_price"  readonly="1" force_save="1" />
+          <field name="karats" readonly="1" force_save="1" />
+          <field name="gold_price" readonly="1" force_save="1" />
 
         </xpath>
       </field>
-  </record>
+    </record>
 
-  <!-- <record model="ir.ui.view" id="gold_payment_cust_form1">
+    <!-- <record model="ir.ui.view" id="gold_payment_cust_form1">
     <field name="name">gold.payment.customer.view.inherit1</field>
     <field name="model">gold.payment.customer</field>
     <field name="inherit_id" ref="custome.gold_payment_cust_form"/>
@@ -66,7 +98,7 @@
       </xpath>
     </field>
 </record> -->
-  <!-- <record model="ir.ui.view" id="product_view_inherit3">
+    <!-- <record model="ir.ui.view" id="product_view_inherit3">
     <field name="name">product.view.inherit</field>
     <field name="model">product.template</field>
     <field name="inherit_id" ref="product.product_template_only_form_view"/>
@@ -80,7 +112,7 @@
       </xpath>
     </field>
   </record> -->
- 
+
 
 
 
