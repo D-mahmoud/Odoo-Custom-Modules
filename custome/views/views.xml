@@ -15,7 +15,14 @@
           <page string="Total Gold" name="total_gold" >
             <group>
               
-              <field name="showd"/>
+              <field name="k9"/>
+              <field name="k12"/>
+              <field name="k14"/>
+              <field name="k18"/>
+              <field name="k21"/>
+              <field name="k22"/>
+              <field name="k24"/>
+
 
             </group>
         </page>

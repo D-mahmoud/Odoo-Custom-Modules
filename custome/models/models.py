@@ -7,10 +7,49 @@ from odoo.exceptions import ValidationError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     sale_mode = fields.Selection([('1', 'Fixed'),('2', 'Daily')],string="Sale Base")
-    showd = fields.Integer('showd',compute='_compute_orderline')
+    k9 =fields.Float(string='Karat 9k Weight (G)',compute='_compute_line_weight')
+    k12 =fields.Float(string='Karat 12k Weight (G)',compute='_compute_line_weight')
+    k14 =fields.Float(string='Karat 14k Weight (G)',compute='_compute_line_weight')
+    k18 =fields.Float(string='Karat 18k Weight (G)',compute='_compute_line_weight')
+    k21 =fields.Float(string='Karat 21k Weight (G)',compute='_compute_line_weight')
+    k22 =fields.Float(string='Karat 22k Weight (G)',compute='_compute_line_weight')
+    k24 =fields.Float(string='Karat 24k Weight (G)',compute='_compute_line_weight')
+    
+    @api.onchange('order_line')
+    def _compute_line_weight(self):
+        line_weight9  = 0
+        line_weight12 = 0
+        line_weight14 = 0
+        line_weight18 = 0
+        line_weight21 = 0
+        line_weight22 = 0
+        line_weight24 = 0
 
-    # def _compute_orderline(self):
-    #     return 110       
+        for purchase in self:
+            for line in purchase.order_line:
+                if line.karats == "9":
+                    line_weight9+=line.weight
+                elif line.karats == "12":
+                    line_weight12+=line.weight
+                elif line.karats == "14":
+                    line_weight14+=line.weight
+                elif line.karats == "18":
+                    line_weight18+=line.weight
+                elif line.karats == "21":
+                    line_weight21+=line.weight
+                elif line.karats == "22":
+                    line_weight22+=line.weight
+                elif line.karats == "24":
+                    line_weight24+=line.weight
+            purchase.k9  = line_weight9
+            purchase.k12 = line_weight12
+            purchase.k14 = line_weight14
+            purchase.k18 = line_weight18
+            purchase.k21 = line_weight21
+            purchase.k22 = line_weight22
+            purchase.k24 = line_weight24
+   
+          
     @api.onchange('order_line')
     def serial_uniqe(self):
         self.order_line.sale_sale = self.sale_mode
