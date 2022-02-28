@@ -5,19 +5,23 @@ from logging import NullHandler,info
 import itertools
 
 
-class custom_lot(models.Model):
-    _name = 'custom_lot.custom_lot'
-    _description = 'custom_lot.custom_lot'
+# class custom_lot(models.Model):
+#     _name = 'custom_lot.custom_lot'
+#     _description = 'custom_lot.custom_lot'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+# #     name = fields.Char()
+# #     value = fields.Integer()
+# #     value2 = fields.Float(compute="_value_pc", store=True)
+# #     description = fields.Text()
+# #
+# #     @api.depends('value')
+# #     def _value_pc(self):
+# #         for record in self:
+# #             record.value2 = float(record.value) / 100
+
+class lot(models.Model):
+    _inherit = 'stock.move.line'
+    qty_done=fields.Float(digits=(12,4))
 
 class lot(models.Model):
     _inherit = 'stock.move'
@@ -40,9 +44,11 @@ class lot(models.Model):
         else:
            self.hide = True
            
-    @api.onchange('seq')
+    @api.constrains('seq')
     def get_serial(self):
-        
+            number_line = len(self.move_line_nosuggest_ids )
+            if    number_line > 0 :
+                self.move_line_nosuggest_ids.unlink()
             def separate(string):
                 return ["".join(group) for key, group in itertools.groupby(string, str.isdigit)]
             
@@ -55,7 +61,6 @@ class lot(models.Model):
             last_seq    = sequence2[last_len]
             
             
-            # self.env['stock.move.line'].new
             
             number_of_pe = self.number_of_pieces 
             if number_of_pe != 0 :
@@ -64,7 +69,9 @@ class lot(models.Model):
                 seq_num = 1
             piece_qty = (self.product_uom_qty) / seq_num
             num_seq = int(last_seq)
-               
+            
+            
+                
             for rec in range(seq_num):
                 sequ_str = str(first_seq)
                

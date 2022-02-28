@@ -7,7 +7,7 @@
       <field name="inherit_id" ref="product.product_template_only_form_view"/>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='barcode']" position="after">
-          <field name="karat" />
+          <field name="karat"  attrs="{'readonly': [('id', '!=', False)]}"/>
           <field name="has_stones"/>
           <field name="has_stones_price"/>
           
@@ -45,6 +45,5 @@
       </field>
     </record> -->
 
-    
   </data>
 </odoo>

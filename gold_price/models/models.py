@@ -36,7 +36,6 @@ class goldPrice(models.Model):
     def val_date(self):
         date = self.day
         if date.date() < fields.datetime.now().date():
-            info("----date is past-----------------oooooooooooooooooo-------------oooooooooooo")
             raise ValidationError("Please select now or future date")
         else :
             self.env['gold.price'].search([('karat','=',self.karat),('id' ,'!=',self.id)]).write({'active': False })
