@@ -16,7 +16,7 @@ class goldPrice(models.Model):
                 ('21', '21'),
                 ('22', '22')],
         string="Karat",
-        required=True)
+        required=False)
     conversion_karat = fields.Selection(
         selection=  [('9', '9'),
                 ('12', '12'),
@@ -25,7 +25,7 @@ class goldPrice(models.Model):
                 ('21', '21'),
                 ('22', '22')],
         string="Conversion Karat",
-        required=True)
+        required=False)
     gold_price = fields.Float(string='Gold Price' ,required=True,help="set gold price to day")
     day= fields.Datetime(string="Active From Date",required=True , default = lambda self : fields.datetime.now()   )
     active = fields.Boolean(string="Active")

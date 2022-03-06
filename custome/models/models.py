@@ -2,21 +2,40 @@
 from odoo import models, fields, api
 import itertools
 from logging import info
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError,UserError
+import itertools
+from decimal import Decimal
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     sale_mode = fields.Selection([('1', 'Fixed'),('2', 'Daily')],string="Sale Base")
-    k9 =fields.Float(string='Karat 9k Weight (G)',compute='_compute_line_weight')
-    k12 =fields.Float(string='Karat 12k Weight (G)',compute='_compute_line_weight')
-    k14 =fields.Float(string='Karat 14k Weight (G)',compute='_compute_line_weight')
-    k18 =fields.Float(string='Karat 18k Weight (G)',compute='_compute_line_weight')
-    k21 =fields.Float(string='Karat 21k Weight (G)',compute='_compute_line_weight')
-    k22 =fields.Float(string='Karat 22k Weight (G)',compute='_compute_line_weight')
-    k24 =fields.Float(string='Karat 24k Weight (G)',compute='_compute_line_weight')
+    k9  = fields.Float(string='Karat 9k Weight  (G)',compute='_compute_line_weight')
+    k12 = fields.Float(string='Karat 12k Weight (G)',compute='_compute_line_weight')
+    k14 = fields.Float(string='Karat 14k Weight (G)',compute='_compute_line_weight')
+    k18 = fields.Float(string='Karat 18k Weight (G)',compute='_compute_line_weight')
+    k21 = fields.Float(string='Karat 21k Weight (G)',compute='_compute_line_weight')
+    k22 = fields.Float(string='Karat 22k Weight (G)',compute='_compute_line_weight')
+    k24 = fields.Float(string='Karat 24k Weight (G)',compute='_compute_line_weight')
+    tesxt = fields.Char(string="tesxt")
+
+    @api.onchange('sale_mode')
+    def _onchange_base(self):
+        for red in self :
+            red.invoice_ids.sale_mode = self.sale_mode
+        
+        
     
+    @api.onchange('partner_id')
+    def _onchange_sale_base(self):
+        self.sale_mode = self.partner_id.sale_mode
+        
     @api.onchange('order_line')
     def _compute_line_weight(self):
+        self.order_line.update({
+                    'sale_sale':  self.sale_mode
+
+                }) 
         line_weight9  = 0
         line_weight12 = 0
         line_weight14 = 0
@@ -28,19 +47,19 @@ class SaleOrder(models.Model):
         for purchase in self:
             for line in purchase.order_line:
                 if line.karats == "9":
-                    line_weight9+=line.weight
-                elif line.karats == "12":
-                    line_weight12+=line.weight
-                elif line.karats == "14":
-                    line_weight14+=line.weight
-                elif line.karats == "18":
-                    line_weight18+=line.weight
-                elif line.karats == "21":
-                    line_weight21+=line.weight
-                elif line.karats == "22":
-                    line_weight22+=line.weight
-                elif line.karats == "24":
-                    line_weight24+=line.weight
+                    line_weight9  += line.weight
+                elif line.karats  == "12":
+                    line_weight12 +=  line.weight
+                elif line.karats  == "14":
+                    line_weight1  +=  line.weight
+                elif line.karats  == "18":
+                    line_weight18 +=  line.weight
+                elif line.karats  == "21":
+                    line_weight21 +=  line.weight
+                elif line.karats  == "22":
+                    line_weight22 += line.weight
+                elif line.karats  == "24":
+                    line_weight24 += line.weight
             purchase.k9  = line_weight9
             purchase.k12 = line_weight12
             purchase.k14 = line_weight14
@@ -52,7 +71,6 @@ class SaleOrder(models.Model):
           
     @api.onchange('order_line')
     def serial_uniqe(self):
-        self.order_line.sale_sale = self.sale_mode
         
         exist_product_list = []
         for purchase in self:
@@ -60,55 +78,86 @@ class SaleOrder(models.Model):
                 if line.serial.id in exist_product_list:
                     raise ValidationError('Serial should be one per line.')
                 exist_product_list.append(line.serial.id)
+    
    
-class SaleOrder(models.Model):
+    # @api.model
+    # def _action_cancel(self):
+
+    #     info("-----------------------------oooooooooooooooooooooooooo--------------------")
+    #     return super(SaleOrder, self)._action_cancel()
+        # Your code goes here
+        # info("-----------------------------oooooooooooooooooooooooooo--------------------")
+        # def separate(string):
+        #         return ["".join(group) for key, group in itertools.groupby(string, str.isdigit)]
+        # seq_id = self.env['sale.order'].search([])[0].name
+        # sequence2   = separate(seq_id)
+            
+        # first_len   = len(sequence2)-2
+        # last_len    = len(sequence2)-1
+        # first_seq   = sequence2[first_len]
+        # last_seq    = sequence2[last_len]
+        # num_seq = int(last_seq)+1
+        # sequ_str = str(first_seq)
+        # sequ = str(num_seq).zfill(5)
+        # seqy=(sequ_str + sequ)
+        # self.tesxt = seqy
+        # return super(SaleOrder, self).create_invoices()
+        # self.env['account.move'].search([('karat' , '=',rec.karats)])
+        
+class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
-    sale_sale = fields.Char(string="mode")
-    serial = fields.Many2one(
-        string='Serial',
-        comodel_name='stock.production.lot',   
-    )
-    available = fields.Boolean(default=True)
-    net_weight =fields.Float('Weight',digits=(12,4) )
-    making_price =fields.Float('Cost',digits=(12,4),readonly=True)
-    gold_price =fields.Float('Gold Price',digits=(12,4),readonly=True)
-    karats = fields.Char('Karat',readonly=True)
-    weight =fields.Float('Weight',digits=(12,4) )
+    
+    sale_sale       = fields.Char(string="mode")
+    serial          = fields.Many2one(string='Serial',comodel_name='stock.production.lot')
+    available       = fields.Boolean(default=True)
+    net_weight      = fields.Float('Weight',digits=(12,4) )
+    making_price    = fields.Float('Cost',digits=(12,4),readonly=True)
+    gold_price      = fields.Float('Gold Price',digits=(12,4),readonly=True)
+    karats          = fields.Char('Karat',readonly=True)
+    weight          = fields.Float('Weight',digits=(12,4) )
 
     
     @api.onchange('serial')
     def _onchange_(self):
-        total_gold=[]
-        gold_p = self.env['gold.price']
-        
-        serials  = self.env['stock.production.lot'].search([('id', '=', self.serial.id)])
-       
-        prod = serials.product_id.id
-        
+        self.sale_sale  = self.order_id.sale_mode
+        gold_p          = self.env['gold.price']
+        serials         = self.env['stock.production.lot'].search([('id', '=', self.serial.id)])
+        prod            = serials.product_id.id
         product_product = self.env['product.product'].search([('id', '=', prod)]).product_tmpl_id
-
-        karat = product_product.karat
-        making = product_product.standard_price
-
-        serials  = self.env['stock.production.lot'].search([('id', '=', self.serial.id)])
-        if self.serial.id :
-            serials_qty  = self.env['stock.move.line'].search([('lot_id', '=', self.serial.id)]).qty_done
-        else:
-            serials_qty = 0.00
+        karat           = product_product.karat
+        making          = product_product.standard_price
         
+        self.invoice_lines.testf = "omar adel omar mohamed"
+        
+        if self.serial.id :
+            serials_qty  = self.env['stock.move.line'].search([('lot_name', '=', self.serial.name)]).qty_done
+        else:
+            serials_qty = 1.00
         for rec in self:
-            rec.karats = karat
-            latest_price = gold_p.search([('karat' , '=',self.karats)], limit=1, order='day desc').gold_price
-            rec.gold_price = latest_price
-            rec.making_price = making
-            rec.product_id = prod 
-            rec.weight  =  serials_qty 
-            if self.sale_sale == "1":
-                rec.price_subtotal = (serials_qty *  making)
-                
-            elif self.sale_sale =="2":
-                rec.price_subtotal = (serials_qty * (making + latest_price))
-            total_gold.append({rec.karats:rec.weight})
+                rec.karats          = karat
+                latest_price        = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').gold_price
+                convert_karat       = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').conversion_karat
+                rec.gold_price      = latest_price
+                rec.making_price    = making
+                rec.product_id      = prod 
+                rec.weight          = serials_qty
+                convert_int = float(convert_karat)
+                qty_m_karat  =  serials_qty * float(karat)
+                if rec.sale_sale == "1" and convert_karat and karat:
+                    rec.product_uom_qty =  qty_m_karat / convert_int
+                    rec.price_unit = rec.making_price
+                    
+                   
+                elif rec.sale_sale == "2" and convert_karat and karat:
+                    
+                    rec.product_uom_qty =  qty_m_karat / convert_int
+                    rec.price_unit = rec.making_price + latest_price
+                        # rec.update({
+                        #     'product_uom_qty':  int(convert_karat) ,
+                        #     'price_unit' : rec.making_price + latest_price
+                        # })
+   
+    
 
 
     
@@ -133,28 +182,44 @@ class Karat(models.Model):
     _inherit = 'purchase.order.line'
     gold_price =fields.Float('Gold Price',digits=(12,4),readonly=True,store = True)
     karats = fields.Char('Karat',store = True)
+
+    # @api.depends('product_id')
+    # @api.onchange('product_id')
+    # def product_id_change(self):
+    #     for rec in self:
+    #         rec.price_subtotal = 565
+            
+# class SaleAdvance(models.TransientModel):
+#     _inherit = 'sale.advance.payment.inv'
+#     karats = fields.Char('Karat')
+
+#     @api.model
+#     def create_invoices(self):
+       
+#         self.karats = "omar adel omar mohamed"
+#         return super(SaleAdvance, self).create_invoices()
     
+class SaleAdvanced(models.TransientModel):
+    _inherit = "sale.advance.payment.inv"
+    karats = fields.Char('Karat')
+    def create_invoices(self):
+            """ Override method from sale/wizard/sale_make_invoice_advance.py
 
+                When the user want to invoice the timesheets to the SO
+                up to a specific period then we need to recompute the
+                qty_to_invoice for each product_id in sale.order.line,
+                before creating the invoice.
+            """
+            sale_order = self.env['sale.order'].browse(
+                self._context.get('active_id')
+            )
 
-# class Karat(models.Model):
-#     _inherit = 'purchase.order'
-   
-
-#     @api.onchange('order_line')
-#     def get_data(self):
-        
-#         product_template = self.env['product.template']
-#         product_product = self.env['product.product']
-#         for rec in self.order_line:
-#             product_templ = product_product.search([('id', '=', rec.product_id.id)]).product_tmpl_id.karat
-#             # product_karat = product_template.search([('id', '=', rec.product_templ.id)]).karat
-#             rec.karats = product_templ
-#             price = self.env['gold.price'].search([('karat', '=', product_templ),('active','=', True)]).gold_price
-#             rec.gold_price = price
+            if self.karats == 'delivered':
+                # return {'type': 'ir.actions.act_window_close'}
+                # sok =  self.env['sale.order'].search([('id','=',sale_order.id)]).sale_mode
+                # sok =  self.env['sale.order'].search([('id','=',sale_order.id)]).sale_mode
+                cok = self.env['account.move'].search([('invoice_origin','=',sale_order.name)]).invoice_origin
+                self.env['sale.order'].search([('id','=',sale_order.id)]).write({'tesxt':cok})
+                # self.env['gold.price'].create({'gold_price': sok})
+            return super(SaleAdvanced, self).create_invoices()
     
-#     tax_karat_json = fields.Char(compute='_compute_karat_totals_json')
-
-#     @api.onchange('order_line')
-#     def  _compute_karat_totals_json(self):
-#         calc = "omaradel"
-#         return calc

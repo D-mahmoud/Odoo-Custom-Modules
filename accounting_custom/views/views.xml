@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="account_move_inherit1">
+      <field name="name">account.move.inherit</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="after">
+
+          <field name="sale_mode"  placeholder="Sale Base" style="color:#898687" />
+          <field name="credit_gold"/>
+
+          
+        </xpath>
+        <xpath expr="//page/field[@name='line_ids']/tree/field[@name='credit']" position="after">
+          <field name="debit_gold"/>
+          <field name="credit_gold"/>
+          
+
+          
+        </xpath>
+
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_move_inherit3">
+      <field name="name">account.move.inherit3</field>
+      <field name="model">account.move.line</field>
+      <field name="inherit_id" ref="account.view_move_line_tree_grouped"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='credit']" position="after">
+
+          <field name="debit_gold" sum="Total Debit Gold"/>
+          <field name="credit_gold" sum="Total Credit Gold"/>
+
+          
+        </xpath>
+        
+
+      </field>
+    </record>
+    <record model="ir.ui.view" id="account_move_line_inherit1">
+      <field name="name">account.move.line.inherit</field>
+      <field name="model">account.move.line</field>
+      <field name="inherit_id" ref="account.view_move_line_tree"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='credit']" position="after">
+
+          <field name="debit_gold" sum="Total Debit Gold"/>
+          <field name="credit_gold" sum="Total Credit Gold"/>
+
+          
+        </xpath>
+        
+
+      </field>
+    </record>
+
+  </data>
+</odoo>
