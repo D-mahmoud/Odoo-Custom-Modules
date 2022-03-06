@@ -39,7 +39,9 @@
       <field name="inherit_id" ref="base.view_partner_form"/>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='parent_id']" position="after">
-          <field name="group"  placeholder="Vendor Group" style="color:#898687" />
+          <field name="group"  placeholder="Vendor Group" style="color:#898687"  />
+          <field name="sale_mode"  placeholder="Sale Base" style="color:#898687" />
+          <field name="type_contact" />
         </xpath>
 
       </field>

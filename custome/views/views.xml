@@ -9,6 +9,8 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='payment_term_id']" position="after">
           <field name="sale_mode"/>
+          <field name="tesxt"/>
+          
         </xpath>
         <xpath expr="//page[@name='customer_signature']" position="after">
           <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
@@ -47,31 +49,31 @@
           <attribute name="invisible">1</attribute>
         </xpath>
 
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
           <attribute name="invisible">1</attribute>
-        </xpath>
+        </xpath> -->
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
           <field name="karats"/>
-          <!-- <field name="sale_sale"/> -->
+          <field name="sale_sale" />
 
           <field name="gold_price"/>
           <field name="weight"/>
         </xpath>
       </field>
     </record>
-    <!-- 
-    <record model="ir.ui.view" id="res_partner_inherit1">
-      <field name="name">res.partner.inherit</field>
-      <field name="model">res.partner</field>
-      <field name="inherit_id" ref="base.view_partner_form"/>
+  
+    <record model="ir.ui.view" id="sale_advance_payment_inv_inherit1">
+      <field name="name">sale.advance.payment.inv.inherit</field>
+      <field name="model">sale.advance.payment.inv</field>
+      <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
       <field name="arch" type="xml">
-        <xpath expr="//field[@name='parent_id']" position="after">
-          <field name="group" />
+        <xpath expr="//field[@name='advance_payment_method']" position="after">
+          <field name="karats" />
         </xpath>
         
       </field>
-    </record> -->
+    </record> 
 <!-- 
     <record model="ir.ui.view" id="purchase_order_view_inherit">
       <field name="name">purchase.order.view.inherit1</field>
