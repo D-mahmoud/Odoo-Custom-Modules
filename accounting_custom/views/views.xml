@@ -9,8 +9,7 @@
         <xpath expr="//field[@name='partner_id']" position="after">
 
           <field name="sale_mode"  placeholder="Sale Base" style="color:#898687" />
-          <field name="credit_gold"/>
-
+        
           
         </xpath>
         <xpath expr="//page/field[@name='line_ids']/tree/field[@name='credit']" position="after">

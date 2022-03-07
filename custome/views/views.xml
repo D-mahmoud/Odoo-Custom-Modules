@@ -34,7 +34,7 @@
         </xpath>
 
        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
-          <field name="making_price"/>
+          <field name="making_price" readonly="1" force_save="1"/>
         </xpath>
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
@@ -54,11 +54,11 @@
         </xpath> -->
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
-          <field name="karats"/>
-          <field name="sale_sale" />
+          <field name="karats" readonly="1" force_save="1"/>
+          <field name="sale_sale" invisible="1"/>
 
-          <field name="gold_price"/>
-          <field name="weight"/>
+          <field name="gold_price"  readonly="1" force_save="1"/>
+          <field name="weight"  readonly="1" force_save="1"/>
         </xpath>
       </field>
     </record>
