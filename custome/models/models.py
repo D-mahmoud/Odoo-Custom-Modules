@@ -152,17 +152,19 @@ class SaleOrderLine(models.Model):
                 rec.gold_price      = latest_price
                 rec.making_price    = making
                 rec.product_id      = prod 
-                rec.weight          = serials_qty
                 convert_int = float(convert_karat)
-                qty_m_karat  =  serials_qty * float(karat)
+                qty_m_karat  =  serials_qty * float(karat) 
+                if convert_karat and karat:
+                    rec.weight          = qty_m_karat / convert_int
+                
                 if rec.sale_sale == "1" and convert_karat and karat:
-                    rec.product_uom_qty =  qty_m_karat / convert_int
+                    rec.product_uom_qty =  serials_qty
                     rec.price_unit = rec.making_price
                     
                    
                 elif rec.sale_sale == "2" and convert_karat and karat:
                     
-                    rec.product_uom_qty =  qty_m_karat / convert_int
+                    rec.product_uom_qty =  serials_qty
                     rec.price_unit = rec.making_price + latest_price
                         # rec.update({
                         #     'product_uom_qty':  int(convert_karat) ,
