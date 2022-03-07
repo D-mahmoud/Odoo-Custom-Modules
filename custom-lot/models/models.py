@@ -34,11 +34,11 @@ class lot(models.Model):
     seq = fields.Char(
         string='Start serial sequence',
     )
-    hide =  fields.Boolean(string='hide')
+    hide =  fields.Boolean(string='hide',default=True)
     @api.onchange('fixed_qty')
     def confirm(self):
         
-       
+    
         if self.fixed_qty == True:
             self.hide = False
         else:

@@ -20,8 +20,7 @@
           <label for="seq"  attrs="{'invisible': [('hide',  '=', True)]}" />
           <div class="o_row" >
             <span><field name="seq" attrs="{'invisible': [('hide',  '=', True)]}" /></span>
-            <span><button name="get_serial" type="object"  class="btn-primary" icon="fa-create" string="Create Serials"  /></span>
-            <!-- <span><button name="action_clear_lines_show_details" type="object" class="btn-link" data-hotkey="y" title="Clear Lines" string="Clear All" attrs="{'invisible': [('hide',  '=', True)]}" /></span> -->
+            <span><button name="get_serial" type="object"  string="Create Serialsfgh" attrs="{'invisible': [('hide',  '=', True)]}" /></span>
           </div>
           
             
