@@ -9,14 +9,16 @@ from decimal import Decimal
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
-    sale_mode = fields.Selection([('1', 'Fixed'),('2', 'Daily')],string="Sale Base")
-    k9  = fields.Float(string='Karat 9k Weight  (G)',compute='_compute_line_weight')
-    k12 = fields.Float(string='Karat 12k Weight (G)',compute='_compute_line_weight')
-    k14 = fields.Float(string='Karat 14k Weight (G)',compute='_compute_line_weight')
-    k18 = fields.Float(string='Karat 18k Weight (G)',compute='_compute_line_weight')
-    k21 = fields.Float(string='Karat 21k Weight (G)',compute='_compute_line_weight')
-    k22 = fields.Float(string='Karat 22k Weight (G)',compute='_compute_line_weight')
-    k24 = fields.Float(string='Karat 24k Weight (G)',compute='_compute_line_weight')
+    sale_mode   = fields.Selection([('1', 'Fixed'),('2', 'Daily')],string="Sale Base")
+    k9          = fields.Float(string='Karat 9k Weight  (G)',compute='_compute_line_weight',store= True)
+    k12         = fields.Float(string='Karat 12k Weight (G)',compute='_compute_line_weight',store= True)
+    k14         = fields.Float(string='Karat 14k Weight (G)',compute='_compute_line_weight',store= True)
+    k18         = fields.Float(string='Karat 18k Weight (G)',compute='_compute_line_weight',store= True)
+    k21         = fields.Float(string='Karat 21k Weight (G)',compute='_compute_line_weight',store= True)
+    k22         = fields.Float(string='Karat 22k Weight (G)',compute='_compute_line_weight',store= True)
+    k24         = fields.Float(string='Karat 24k Weight (G)',compute='_compute_line_weight',store= True)
+    c_karat     = fields.Float(string='Converted Karat Weight (G)',compute='_compute_line_weight',store= True)
+    
     tesxt = fields.Char(string="tesxt")
 
     @api.onchange('sale_mode')
@@ -30,12 +32,9 @@ class SaleOrder(models.Model):
     def _onchange_sale_base(self):
         self.sale_mode = self.partner_id.sale_mode
         
-    @api.onchange('order_line')
+    @api.depends('order_line')
     def _compute_line_weight(self):
-        self.order_line.update({
-                    'sale_sale':  self.sale_mode
-
-                }) 
+      
         line_weight9  = 0
         line_weight12 = 0
         line_weight14 = 0
@@ -43,23 +42,26 @@ class SaleOrder(models.Model):
         line_weight21 = 0
         line_weight22 = 0
         line_weight24 = 0
-
+        convert_karat = 0
+        karatn        = ""
         for purchase in self:
             for line in purchase.order_line:
+                convert_karat = int(line.c_karats)
+                karatn        = line.karats
                 if line.karats == "9":
-                    line_weight9  += line.weight
+                    line_weight9  += line.product_uom_qty
                 elif line.karats  == "12":
-                    line_weight12 +=  line.weight
+                    line_weight12 +=  line.product_uom_qty
                 elif line.karats  == "14":
-                    line_weight1  +=  line.weight
+                    line_weight1  +=  line.product_uom_qty
                 elif line.karats  == "18":
-                    line_weight18 +=  line.weight
+                    line_weight18 +=  line.product_uom_qty
                 elif line.karats  == "21":
-                    line_weight21 +=  line.weight
+                    line_weight21 +=  line.product_uom_qty
                 elif line.karats  == "22":
-                    line_weight22 += line.weight
+                    line_weight22 += line.product_uom_qty
                 elif line.karats  == "24":
-                    line_weight24 += line.weight
+                    line_weight24 += line.product_uom_qty
             purchase.k9  = line_weight9
             purchase.k12 = line_weight12
             purchase.k14 = line_weight14
@@ -67,8 +69,7 @@ class SaleOrder(models.Model):
             purchase.k21 = line_weight21
             purchase.k22 = line_weight22
             purchase.k24 = line_weight24
-<<<<<<< HEAD
-            #kart
+
             if convert_karat and karatn :
                 purchase.c_karat = (((line_weight9 * 9)/convert_karat)
                                         +((line_weight12 * 12)/convert_karat)
@@ -77,13 +78,14 @@ class SaleOrder(models.Model):
                                         +((line_weight21 * 21)/convert_karat)
                                         +((line_weight22 * 22)/convert_karat)
                                         +((line_weight24 * 24)/convert_karat))
-=======
-   
->>>>>>> bec38e741850cead49e84406c8466533a5ea2cf0
+
           
     @api.onchange('order_line')
     def serial_uniqe(self):
-        
+        self.order_line.update({
+                    'sale_sale':  self.sale_mode
+
+                }) 
         exist_product_list = []
         for purchase in self:
             for line in purchase.order_line:
@@ -127,6 +129,7 @@ class SaleOrderLine(models.Model):
     gold_price      = fields.Float('Gold Price',digits=(12,4),readonly=True)
     karats          = fields.Char('Karat',readonly=True)
     weight          = fields.Float('Weight',digits=(12,4) )
+    c_karats         = fields.Float(string='Converted Karat Weight (G)',store= True)
 
     
     @api.onchange('serial')
@@ -149,6 +152,7 @@ class SaleOrderLine(models.Model):
                 rec.karats          = karat
                 latest_price        = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').gold_price
                 convert_karat       = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').conversion_karat
+                rec.c_karats         = convert_karat
                 rec.gold_price      = latest_price
                 rec.making_price    = making
                 rec.product_id      = prod 

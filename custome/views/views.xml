@@ -32,7 +32,7 @@
                 </group>
                 <group>
                 <!-- karat f -->
-                  <field name="c_karat"  readonly="1" force_save="1" string="Converted Karat Weight (G)"/>
+                  <field name="c_karat"  readonly="1" force_save="1" />
                   
 
 
@@ -67,6 +67,8 @@
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
           <field name="karats" readonly="1" force_save="1"/>
+          <field name="c_karats" readonly="1" force_save="1"/>
+
           <field name="sale_sale" invisible="1"/>
 
           <field name="gold_price"  readonly="1" force_save="1"/>
