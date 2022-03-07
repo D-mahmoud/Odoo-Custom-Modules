@@ -16,6 +16,7 @@
           <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
           <page string="Total Gold" name="total_gold" >
             <group>
+             <group>
               
               <field name="k9"/>
               <field name="k12"/>
@@ -26,7 +27,6 @@
               <field name="k24"/>
 
 
-<<<<<<< HEAD
                 </group>
                 <group>
                 <!-- karat f -->
@@ -35,8 +35,6 @@
 
 
                 </group>
-=======
->>>>>>> bec38e741850cead49e84406c8466533a5ea2cf0
             </group>
         </page>
         </xpath>
