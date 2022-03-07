@@ -16,6 +16,7 @@
           <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
           <page string="Total Gold" name="total_gold" >
             <group>
+              <group>
               
               <field name="k9"/>
               <field name="k12"/>
