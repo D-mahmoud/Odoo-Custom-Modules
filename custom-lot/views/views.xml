@@ -20,7 +20,7 @@
           <label for="seq"  attrs="{'invisible': [('hide',  '=', True)]}" />
           <div class="o_row" >
             <span><field name="seq" attrs="{'invisible': [('hide',  '=', True)]}" /></span>
-            <span><button name="get_serial" type="object"  string="Create Serialsfgh" attrs="{'invisible': [('hide',  '=', True)]}" /></span>
+            <span><button name="get_serial" type="object"  string="Create Serials" attrs="{'invisible': [('hide',  '=', True)]}" /></span>
           </div>
           
             
