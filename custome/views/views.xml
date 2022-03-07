@@ -29,7 +29,7 @@
 
                 </group>
                 <group>
-                
+                <!-- karats -->
                   <field name="c_karat"  readonly="1" force_save="1" string="Converted Karat Weight (G)"/>
                   
 
