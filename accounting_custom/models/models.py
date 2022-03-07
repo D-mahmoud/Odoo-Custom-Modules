@@ -8,25 +8,13 @@ class AccountMoveCustom(models.Model):
     _inherit = 'account.move'
     
     sale_mode = fields.Selection([('1', 'Fixed'),('2', 'Daily')],string="Sale Base",compute='_compute_line_mode' ,store=True)
-    credit_gold      = fields.Float('Gold Cre.',digits=(12,4),compute='_compute_line_mode' ,store=True)
+    credit_gold      = fields.Float('Gold Cre.',digits=(12,4))
     @api.depends('invoice_date')
     def _compute_line_mode(self):
-        # self.credit_gold = 15569
         sale_orderk = self.env['sale.order'].search([('name','=',self.invoice_origin)]).sale_mode
         self.sale_mode = sale_orderk   
         
-    # def action_post(self):
-    #     account_sale_mode = self.env['account.move.line'].search([('move_id','=',self.id)])
-    #     account_line = self.env['account.move.line'].search([('move_id','=',96)])
-        
-    #     for rec in account_sale_mode :
-    #         self.credit_gold = rec.id
-    #         # rec.write({'credit_gold':self})
-    #     # info("=---------------================================",account_sale_mode)
-    #     # for rec in self.invoice_line_ids
-    #     # raise ValidationError(account_moved.id)
-    #     return super(AccountMoveCustom, self).action_post()
-
+   
 
         
 class AccountMoveLineCustom(models.Model):
@@ -42,13 +30,14 @@ class AccountMoveLineCustom(models.Model):
         if self.move_id.sale_mode == "1" :
             sum_qty=0
             for rec in self :
-                if rec.credit > 0 and rec.debit <=0 :
+                sum_qty +=rec.quantity
+                if rec.account_id.id == 5 :
                     rec.credit_gold = rec.quantity
-                    sum_qty +=rec.quantity
+                    
                     rec.debit_gold = 0
-                elif rec.credit <= 0 and rec.debit >0 :
+                elif rec.account_id.id == 6  :
                     rec.credit_gold = 0
-                    rec.debit_gold = sum_qty
+                    rec.debit_gold = sum_qty-1
     # def action_post(self):
     #     account_sale_mode = self.env['account.move.line'].search([('move_id','=',self.id)])
     #     account_line = self.env['account.move.line'].search([('move_id','=',96)])

@@ -16,17 +16,17 @@
           <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
           <page string="Total Gold" name="total_gold" >
             <group>
-                <group>
-                  
-                  <field name="k9"  readonly="1" force_save="1" />
-                  <field name="k12" readonly="1" force_save="1" />
-                  <field name="k14" readonly="1" force_save="1" />
-                  <field name="k18" readonly="1" force_save="1" />
-                  <field name="k21" readonly="1" force_save="1" />
-                  <field name="k22" readonly="1" force_save="1" />
-                  <field name="k24" readonly="1" force_save="1" />
+              
+              <field name="k9"/>
+              <field name="k12"/>
+              <field name="k14"/>
+              <field name="k18"/>
+              <field name="k21"/>
+              <field name="k22"/>
+              <field name="k24"/>
 
 
+<<<<<<< HEAD
                 </group>
                 <group>
                 <!-- karat -->
@@ -35,6 +35,8 @@
 
 
                 </group>
+=======
+>>>>>>> bec38e741850cead49e84406c8466533a5ea2cf0
             </group>
         </page>
         </xpath>
@@ -64,8 +66,6 @@
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
           <field name="karats" readonly="1" force_save="1"/>
-          <field name="c_karats" readonly="1" force_save="1"/>
-
           <field name="sale_sale" invisible="1"/>
 
           <field name="gold_price"  readonly="1" force_save="1"/>
