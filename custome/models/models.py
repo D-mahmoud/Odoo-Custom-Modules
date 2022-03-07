@@ -68,7 +68,7 @@ class SaleOrder(models.Model):
             purchase.k21 = line_weight21
             purchase.k22 = line_weight22
             purchase.k24 = line_weight24
-            #karts
+            #kart
             if convert_karat and karatn :
                 purchase.c_karat = (((line_weight9 * 9)/convert_karat)
                                         +((line_weight12 * 12)/convert_karat)
