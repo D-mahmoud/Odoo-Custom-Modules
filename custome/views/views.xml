@@ -9,7 +9,9 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='payment_term_id']" position="after">
           <field name="sale_mode"/>
+
           <field name="tesxt" invisible="1"/>
+
           
         </xpath>
         <xpath expr="//page[@name='customer_signature']" position="after">
