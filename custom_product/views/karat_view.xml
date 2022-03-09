@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+
+        <!-- explicit list view definition -->
+        <menuitem name="Karat" id="custom_product.menu_root" />
+        <record model="ir.ui.view" id="custom_product.list">
+            <field name="name">Karat</field>
+            <field name="model">custom_product.karat</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="karat" />
+                    <field name="price" />
+                    <field name="date" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="karat_id">
+            <field name="name">Karat</field>
+            <field name="model">custom_product.karat</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                
+                <form string="Karat">
+                        <group colspan="2" col="2">
+                            <separator string="Gold Price Todoay" colspan="2"/>
+                            <field name="karat" />
+                            <field name="price" />
+                            <field name="date" />
+                        </group>
+        
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="custom_product.action_window">
+            <field name="name">Gold Price</field>
+            <field name="res_model">custom_product.karat</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem name="Gold Price Today" id="custom_product.menu_root" parent="stock.menu_stock_inventory_control" action="custom_product.action_window" />
+        <!-- <menuitem name="custom_product List" id="custom_product.menu_2_list" parent="custom_product.actions" action="custom_product.action_window" /> -->
+    </data>
+</odoo>

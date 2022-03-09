@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+
+
+
+
+    <record model="ir.ui.view" id="stock_view_inherit">
+      <field name="name">stock.view.inherit2</field>
+      <field name="model">stock.move</field>
+      <field name="inherit_id" ref="stock.view_stock_move_nosuggest_operations"/>
+      <field name="arch" type="xml">
+        <xpath expr="//label[@for='product_uom_qty']"  position="before">
+         
+            
+          
+          <field name="fixed_qty"/>
+          <field name="hide" invisible="1"/>
+          
+          <field name="number_of_pieces" attrs="{'invisible': [('hide',  '=', True)]}" />
+          <label for="seq"  attrs="{'invisible': [('hide',  '=', True)]}" />
+          <div class="o_row" >
+            <span><field name="seq" attrs="{'invisible': [('hide',  '=', True)]}" /></span>
+            <span><button name="get_serial" type="object"  string="Create Serials" attrs="{'invisible': [('hide',  '=', True)]}" /></span>
+          </div>
+          
+            
+          
+          
+         
+        </xpath>
+        
+      </field>
+    </record>
+   
+  
+  
+   
+  </data>
+</odoo>

@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="gold_payment_cust4">
+            <field name="name">Gold Payment for Vendor</field>
+            <field name="model">gold.payment.customer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="trancaction_id"/>
+                    <field name="date"/>
+                    <field name="vendor"/>
+                    <field name="product"/>
+                    <field name="warehouse"/>
+                    <field name="debit_qty"/>
+                    <field name="credit_qty"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="gold_payment_cust_form4">
+            <field name="name">Gold Payment for Vendor</field>
+            <field name="model">gold.payment.customer</field>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <form string="gold payment form">
+                    <sheet>
+                        <group >
+                        
+                        <field name="trancaction_id"/>
+                        <field name="date"/>
+                        <field name="vendor"/>
+                        
+                        <field name="product" />
+                        <field name="warehouse"/>
+                        <field name="debit_qty"/>
+                        <field name="credit_qty"/>
+                        
+
+                             
+                        </group>  
+                       
+                </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="custome.gold_payment_list4">
+            <field name="name">Gold Payment for Vendor</field>
+            <field name="res_model">gold.payment.customer</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Gold Payment for Vendor"  id="custome.gold_payment_list5" parent="purchase.menu_procurement_management" action="custome.gold_payment_list4"/>
+    </data>
+</odoo>
+       

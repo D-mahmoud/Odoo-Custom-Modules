@@ -1,0 +1,51 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="group.list">
+      <field name="name">group list</field>
+      <field name="model">group.group</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="group"/>
+          <field name="type"/>
+          
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="group.action_window">
+      <field name="name">Group </field>
+      <field name="res_model">group.group</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- Top menu item -->
+    <menuitem name="Groups" id="group.menu" parent="contacts.res_partner_menu_contacts" action="group.action_window" />
+
+    
+
+
+
+
+
+
+    <record model="ir.ui.view" id="res_partner_inherit1">
+      <field name="name">res.partner.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='parent_id']" position="after">
+          <field name="group"  placeholder="Vendor Group" style="color:#898687"  />
+          <field name="sale_mode"  placeholder="Sale Base" style="color:#898687" />
+          <field name="type_contact" />
+        </xpath>
+
+      </field>
+    </record>
+
+  </data>
+</odoo>

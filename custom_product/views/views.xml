@@ -1,0 +1,49 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="product_view_inherit">
+      <field name="name">product.view.inherit</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='barcode']" position="after">
+          <field name="karat"  attrs="{'readonly': [('id', '!=', False)]}"/>
+          <field name="has_stones"/>
+          <field name="has_stones_price"/>
+          
+
+        </xpath>
+      </field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="stock_view_inherit">
+      <field name="name">stock.view.inherit</field>
+      <field name="model">stock.production.lot</field>
+      <field name="inherit_id" ref="stock.view_production_lot_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='ref']" position="after">
+          <field name="gross_weight" />
+        </xpath>
+        <xpath expr="//field[@name='ref']" position="after">
+          <field name="net_weight" />
+        </xpath>
+      </field>
+    </record>
+
+    
+    <!-- <record model="ir.ui.view" id="res_partner_inherit1 ">
+      <field name="name">res.partner.inherit</field>
+      <field name="model">res.partner.lot</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='parent_id']" position="after">
+          <field name="x_group" />
+        </xpath>
+        
+      </field>
+    </record> -->
+
+  </data>
+</odoo>

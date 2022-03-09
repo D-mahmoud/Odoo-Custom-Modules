@@ -1,0 +1,48 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="gold_price_list2">
+      <field name="name">Gold Price</field>
+      <field name="model">gold.price</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="karat"/>
+          <field name="gold_price"/>
+          <field name="day"/>
+          <field name="conversion_karat"/>
+          <field name="active" widget="boolean_toggle"/>
+
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="gold_price_id">
+      <field name="name">Gold Price</field>
+      <field name="model">gold.price</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+        <form string="gold price form">
+          <!-- <button name="create_record" string="Update Price" type="object" class="oe_highlight"/> -->
+          <sheet>
+            <group >
+              
+            <separator string="General Info" colspan="2"/>
+            <field name="karat"/>
+            
+            <field name="gold_price"/>
+            <field name="conversion_karat"/>
+            <field name="day" />
+            <field name="active" widget="boolean_toggle"/>
+            <!-- <field name="te    `xt"/> -->
+          </group>
+
+        </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="gold_price.gold_price">
+      <field name="name">Gold Price</field>
+      <field name="res_model">gold.price</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Gold Price today" id="gold_price.gold_price_list" parent="stock.menu_stock_inventory_control" action="gold_price.gold_price" />
+  </data>
+</odoo>
