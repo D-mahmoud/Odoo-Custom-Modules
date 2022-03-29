@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="purchase_order_view_inherit">
+      <field name="name">purchase.order.view.inherit1</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='date_planned_div']" position="after">
+          <field name="sale_mode"/>
+
+          <field name="tesxt" invisible="1"/>
+
+          
+        </xpath>
+        <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
+          <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
+          <page string="Total Gold" name="total_gold" >
+            <group>
+ 
+            <group>
+              
+              <field name="k9"/>
+              <field name="k12"/>
+              <field name="k14"/>
+              <field name="k18"/>
+              <field name="k21"/>
+              <field name="k22"/>
+              <field name="k24"/>
+
+
+ 
+                </group>
+                <group>
+                <!-- karat f -->
+                  <field name="c_karat"  readonly="1" force_save="1" />
+                  
+
+
+                </group>
+
+            </group>
+        </page>
+        </xpath>
+       
+
+       <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
+          <field name="making_price" readonly="1" force_save="1"/>
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+          <attribute name="domain">[('seller_ids.name', '=','partner_id.id')]</attribute>
+        </xpath> -->
+        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath> -->
+
+            <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath> -->
+
+         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="after">
+          <field name="karats" readonly="1" force_save="1"/>
+          <field name="c_karats" readonly="1" force_save="1"/>
+
+          <field name="sale_sale" invisible="1"/>
+
+          <field name="gold_price"  readonly="1" force_save="1"/>
+          <field name="weight"  readonly="1" force_save="1"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

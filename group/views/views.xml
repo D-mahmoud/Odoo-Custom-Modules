@@ -7,13 +7,33 @@
       <field name="model">group.group</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="group"/>
-          <field name="type"/>
-          
+          <field name="group_sel"/>
+          <field name="group_id"/>
+          <field name="group_name"/>
+
         </tree>
       </field>
     </record>
+    <record model="ir.ui.view" id="group.group_form">
+      <field name="name">group list</field>
+      <field name="model">group.group</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+        <form string="Contact group">
+          <!-- <button name="create_record" string="Update Price" type="object" class="oe_highlight"/> -->
+          <sheet>
+            <group >
+              
+            <separator string="General Info" colspan="2"/>
+            <field name="group_sel"/>
+            <field name="group_id"/>
+            <field name="group_name"/>
+          </group>
 
+        </sheet>
+        </form>
+      </field>
+    </record>
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="group.action_window">
@@ -39,7 +59,7 @@
       <field name="inherit_id" ref="base.view_partner_form"/>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='parent_id']" position="after">
-          <field name="group"  placeholder="Vendor Group" style="color:#898687"  />
+          <field name="group"  placeholder="Vendor Group" style="color:#898687" domain="[('group_sel', 'in', type_contact)]" />
           <field name="sale_mode"  placeholder="Sale Base" style="color:#898687" />
           <field name="type_contact" />
         </xpath>
