@@ -18,10 +18,10 @@ class group(models.Model):
 
     group_id = fields.Integer(string="Group ID",required=True)
     group_name = fields.Char(string="Group Name",required=True)
+    total_a = fields.Char(string="Group Name",required=True)
 
- 
-  
 
+   
 class vendor(models.Model):
     _inherit = 'res.partner'
 
@@ -36,11 +36,13 @@ class vendor(models.Model):
     
     @api.onchange('name','customer_rank','supplier_rank')
     def _onchange_group(self):
-        if self.supplier_rank==1 :
-              self.type_contact = 1
-
-        elif self.customer_rank==1 :
-              self.type_contact = 2
+        for rec in self :
+            if rec.supplier_rank==1 :
+            #   self.type_contact = '1'
+                return {'domain': {'group': [('group_sel', '=', '1')]}}
+            elif rec.customer_rank==1 :
+            #   self.type_contact = '2'
+                return {'domain': {'group': [('group_sel', '=', '2')]}}
 
             
     

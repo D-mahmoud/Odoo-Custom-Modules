@@ -28,6 +28,7 @@
             <field name="group_sel"/>
             <field name="group_id"/>
             <field name="group_name"/>
+            <field name="total_a"/>
           </group>
 
         </sheet>
@@ -59,9 +60,10 @@
       <field name="inherit_id" ref="base.view_partner_form"/>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='parent_id']" position="after">
-          <field name="group"  placeholder="Vendor Group" style="color:#898687" domain="[('group_sel', 'in', type_contact)]" />
+          <field name="type_contact" invisible="1"/>
+          <field name="group"  placeholder="Vendor Group" style="color:#898687"  />
           <field name="sale_mode"  placeholder="Sale Base" style="color:#898687" />
-          <field name="type_contact" />
+          <!-- domain="[('group_sel', '=', type_contact)]" -->
         </xpath>
 
       </field>
