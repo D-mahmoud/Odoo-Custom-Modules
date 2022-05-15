@@ -191,7 +191,7 @@ class Serial(models.Model):
     net_weight =fields.Float(
     'Net Weight',
     digits=(12,4) )
-    
+    # diamond_ids = fields.One2many('product.product', 'product_id', string='Diamond Calcolation')    
 
 
 

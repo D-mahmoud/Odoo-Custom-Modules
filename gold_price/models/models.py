@@ -27,6 +27,11 @@ class goldPrice(models.Model):
         string="Conversion Karat",
         required=False)
     gold_price = fields.Float(string='Gold Price' ,required=True,help="set gold price to day")
+    daily_gold_price = fields.Float(string='Daily Gold Price' ,required=True,help="set Daily gold price to day")
+    fixed_gold_price = fields.Float(string='Fixed Gold Price' ,required=True,help="set Fixed gold price to day")
+    labor_gold_price = fields.Float(string='Labor Gold Price' ,required=True,help="set Labor gold price to day")
+
+    
     day= fields.Datetime(string="Active From Date",required=True , default = lambda self : fields.datetime.now()   )
     active = fields.Boolean(string="Active")
     text = fields.Char(string='TEXT')

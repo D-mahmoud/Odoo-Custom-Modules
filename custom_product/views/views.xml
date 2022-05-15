@@ -7,7 +7,9 @@
       <field name="inherit_id" ref="product.product_template_only_form_view"/>
       <field name="arch" type="xml">
         <xpath expr="//field[@name='barcode']" position="after">
-          <field name="karat"  attrs="{'readonly': [('id', '!=', False)]}"/>
+          <field name="item_cat"/>
+          <field name="product_type_name" attrs="{'readonly': [('id', '!=', False)],'invisible': [('item_cat', 'in', ['1',False])]} "/>
+          <field name="karat"  attrs="{'readonly': [('id', '!=', False)],'invisible': [('item_cat', 'in', ['2',False])]}"/>
           <field name="has_stones"/>
           <field name="has_stones_price"/>
           
@@ -23,11 +25,58 @@
       <field name="model">stock.production.lot</field>
       <field name="inherit_id" ref="stock.view_production_lot_form"/>
       <field name="arch" type="xml">
-        <xpath expr="//field[@name='ref']" position="after">
-          <field name="gross_weight" />
+        <xpath expr="//field[@name='company_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+          <attribute name="required">False</attribute>
         </xpath>
-        <xpath expr="//field[@name='ref']" position="after">
+        <!-- <xpath expr="//field[@name='ref']" position="after">
+          <field name="vn" />
+        </xpath> -->
+         <!--<xpath expr="//field[@name='ref']" position="after">
           <field name="net_weight" />
+        </xpath> -->
+        <xpath expr="//group[@name='main_group']" position="after">
+          <notebook>
+            <page string="Calculation" name="calc_lines">
+
+              <field name="calc_ids" widget="section_and_note_one2many" mode="tree,kanban" >
+                  <form>
+                      <field name="item_cat" force_save="1"/>
+                      <field name="item_groups" force_save="1" attrs="{'invisible': ['|',('item_cat', '=', '1'),('item_cat', '!=', '2')]}"/>
+                      <field name="item_id" force_save="1" widget="product_configurator" readonly="1"/>
+                      <field name="qty" force_save="1" attrs="{'invisible': [('item_cat', '=',False)]}"/>
+                      <field name="count" force_save="1" attrs="{'invisible': ['|',('item_cat', '=',False),('item_cat', '=', '1')]}"/>
+                      <field name="size" force_save="1" ttrs="{'invisible': ['|',('item_cat', '=',False),('item_cat', '=', '1')]}"  readonly="1"/>
+                      <field name="price"  force_save="1" attrs="{'invisible': [('item_cat', '=',False)]}"  />
+
+
+                  </form>
+                  <tree string="Calculation Lines" editable="bottom">
+                      <control>
+                          <create name="add_product_control" string=""/>
+                          
+                      </control>
+
+                      
+                      
+                      <field name="item_cat" force_save="1" readonly="1"/>
+                      <field name="item_groups" force_save="1" readonly="1"/>
+                      <field name="item_id" force_save="1" widget="product_configurator" readonly="1"/>
+                      <field name="qty" force_save="1" attrs="{'invisible': [('item_cat', '=',False)]}" readonly="1"/>
+                      <field name="consume_qty" force_save="1" attrs="{'invisible': [('item_cat', '=',False)]}"/>
+                      <field name="count" force_save="1" attrs="{'invisible': ['|',('item_cat', '=',False),('item_cat', '=', '1')]}"/>
+                      <field name="size" force_save="1" attrs="{'invisible': ['|',('item_cat', '=',False),('item_cat', '=', '1')]}"  readonly="1"/>
+                      <field name="price" force_save="1" attrs="{'invisible': [('item_cat', '=',False)]}"  readonly="1"/>
+                  
+                    </tree>
+                  
+              </field>
+             
+          </page>
+
+          </notebook>
+     
+         
         </xpath>
       </field>
     </record>

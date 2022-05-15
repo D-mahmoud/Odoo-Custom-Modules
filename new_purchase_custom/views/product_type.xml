@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+      <!-- explicit list view definition -->
+  
+      <record model="ir.ui.view" id="prodcut_types">
+        <field name="name">Product Type</field>
+        <field name="model">product.type</field>
+        <field name="arch" type="xml">
+          <tree>
+            <field name="active" widget="boolean_toggle"/>
+            <field name="date"/>
+            <field name="item_group"/>
+            <field name="item_name"/>
+            <field name="size_from"/>
+            <field name="size_to"/>
+            <field name="sale_price"/>
+            <field name="purchase_price"/>
+            
+
+
+          </tree>
+        </field>
+      </record>
+
+     <record model="ir.ui.view" id="prodcut_typesform">
+        <field name="name">Product Type</field>
+        <field name="model">product.type</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+          <form string="Product Type">
+            <sheet>
+              <group >
+                  
+                  <separator string="Stone Info" colspan="2"/>
+                  <field name="active" widget="boolean_toggle"/>
+                  <field name="date"/>
+                  <field name="item_group"/>
+                  <field name="item_name"/>
+                  <field name="size_from"/>
+                  <field name="size_to"/>
+                  <field name="sale_price"/>
+                  <field name="purchase_price"/>
+                  
+              </group>
+  
+          </sheet>
+          </form>
+        </field>
+      </record>
+      <!-- actions opening views on models -->
+  
+      <record model="ir.actions.act_window" id="product_action_window">
+        <field name="name">Product Type </field>
+        <field name="res_model">product.type</field>
+        <field name="view_mode">tree,form</field>
+      </record>
+  
+  
+      <!-- Top menu item -->
+      <menuitem name="Product Type Name" id="product.menu" parent="stock.menu_stock_inventory_control" action="product_action_window" />
+  
+      
+  
+  
+  
+  
+  
+  
+     
+  
+  
+    </data>
+  </odoo>

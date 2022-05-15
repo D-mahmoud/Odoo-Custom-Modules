@@ -7,6 +7,10 @@
         <tree>
           <field name="karat"/>
           <field name="gold_price"/>
+          <field name="daily_gold_price"/>
+          <field name="fixed_gold_price"/>
+          <field name="labor_gold_price"/>
+
           <field name="day"/>
           <field name="conversion_karat"/>
           <field name="active" widget="boolean_toggle"/>
@@ -28,6 +32,9 @@
             <field name="karat"/>
             
             <field name="gold_price"/>
+            <field name="daily_gold_price"/>
+            <field name="fixed_gold_price"/>
+            <field name="labor_gold_price"/>
             <field name="conversion_karat"/>
             <field name="day" />
             <field name="active" widget="boolean_toggle"/>

@@ -32,6 +32,15 @@ class SaleOrder(models.Model):
         self.sale_mode = self.partner_id.sale_mode
         
     @api.depends('order_line')
+    def action_create_serial(self):
+        return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'stock.production.lot',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'view_id ref="stock.production.lot.form"': '',
+                'target': 'current',
+            }
     def _compute_line_weight(self):
       
         line_weight9  = 0

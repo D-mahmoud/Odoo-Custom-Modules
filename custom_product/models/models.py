@@ -16,13 +16,16 @@ class Product(models.Model):
                 ('18', '18'),
                 ('21', '21'),
                 ('22', '22')],)
-                
+         
  
 
 
     has_stones = fields.Boolean('Stones Weight Included')
     has_stones_price = fields.Boolean('Stones Price Included')
-    
+    product_type_name = fields.Many2one(string='Product Stone Type',comodel_name='product.type')
+    item_cat = fields.Selection([
+        ('1', 'Gold'),('2', 'Stone')
+    ], string='Item Category')
     @api.onchange('seller_ids')
     def _onchange_(self):
        num_vend = len(self.seller_ids)
@@ -37,4 +40,6 @@ class Serial(models.Model):
     net_weight =fields.Float(
     'Net Weight',
     digits=(12,4) )
+    # gold_ids = fields.One2many('gold_price', 'karat', string='Gold Calc')
     
+
