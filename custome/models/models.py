@@ -18,19 +18,32 @@ class SaleOrder(models.Model):
     k22         = fields.Float(string='Karat 22k Weight (G)',compute='_compute_line_weight',store= True)
     k24         = fields.Float(string='Karat 24k Weight (G)',compute='_compute_line_weight',store= True)
     c_karat     = fields.Float(string='Converted Karat Weight (G)',compute='_compute_line_weight',store= True)
-    
     tesxt = fields.Char(string="tesxt")
+    pricelist_id = fields.Many2one(required=False)
 
     @api.onchange('sale_mode')
     def _onchange_base(self):
         for red in self :
             red.invoice_ids.sale_mode = self.sale_mode
         
-        
+    
+    @api.constrains('partner_invoice_id')
+    def _check_partner_invoice_id(self):
+        self.pricelist_id = 1
+            
+    
     
     @api.onchange('partner_id')
-    def _onchange_sale_base(self):
-        self.sale_mode = self.partner_id.sale_mode
+    def sale_base(self):
+       self.sale_mode =  self.partner_id.sale_mode
+    #    if self.pricelist_id:
+    #         raise ValidationError(self.pricelist_id)
+    #         self.pricelist_id = False
+    #         raise ValidationError(self.pricelist_id)
+    @api.onchange('partner_invoice_id')
+    def price_list(self):
+        if self.pricelist_id :
+            self.pricelist_id = False
         
     @api.depends('order_line')
     def _compute_line_weight(self):
@@ -49,19 +62,19 @@ class SaleOrder(models.Model):
                 convert_karat = int(line.c_karats)
                 karatn        = line.karats
                 if line.karats == "9":
-                    line_weight9  += line.product_uom_qty
+                    line_weight9  += line.weight
                 elif line.karats  == "12":
-                    line_weight12 +=  line.product_uom_qty
+                    line_weight12 +=  line.weight
                 elif line.karats  == "14":
-                    line_weight1  +=  line.product_uom_qty
+                    line_weight1  +=  line.weight
                 elif line.karats  == "18":
-                    line_weight18 +=  line.product_uom_qty
+                    line_weight18 +=  line.weight
                 elif line.karats  == "21":
-                    line_weight21 +=  line.product_uom_qty
+                    line_weight21 +=  line.weight
                 elif line.karats  == "22":
-                    line_weight22 += line.product_uom_qty
+                    line_weight22 += line.weight
                 elif line.karats  == "24":
-                    line_weight24 += line.product_uom_qty
+                    line_weight24 += line.weight
             purchase.k9  = line_weight9
             purchase.k12 = line_weight12
             purchase.k14 = line_weight14
@@ -82,13 +95,15 @@ class SaleOrder(models.Model):
           
     @api.onchange('order_line')
     def serial_uniqe(self):
-        self.order_line.update({
-                    'sale_sale':  self.sale_mode
+        # self.order_line.update({
+        #             'sale_sale':  self.sale_mode
 
-                }) 
+        #         }) 
+        self.pricelist_id = False
         exist_product_list = []
-        for purchase in self:
-            for line in purchase.order_line:
+        for sale in self:
+            for line in sale.order_line:
+
                 if line.serial.id in exist_product_list:
                     raise ValidationError('Serial should be one per line.')
                 exist_product_list.append(line.serial.id)
@@ -133,49 +148,33 @@ class SaleOrderLine(models.Model):
 
     
     @api.onchange('serial')
-    def _onchange_(self):
+    def onchange_sale_product(self):
+        serials         = self.env['stock.production.lot'].search([('id', '=', self.serial.id)])
+        # self.order_partner_id= ""
+        self.invoice_lines.weight = 45698
+
         self.sale_sale  = self.order_id.sale_mode
         gold_p          = self.env['gold.price']
-        serials         = self.env['stock.production.lot'].search([('id', '=', self.serial.id)])
         prod            = serials.product_id.id
-        product_product = self.env['product.product'].search([('id', '=', prod)]).product_tmpl_id
-        karat           = product_product.karat
-        making          = product_product.standard_price
-        
-        self.invoice_lines.testf = "omar adel omar mohamed"
-        
-        if self.serial.id :
-            serials_qty  = self.env['stock.move.line'].search([('lot_name', '=', self.serial.name)]).qty_done
-        else:
-            serials_qty = 1.00
-        for rec in self:
-                rec.karats          = karat
-                latest_price        = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').gold_price
-                convert_karat       = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').conversion_karat
-                rec.c_karats        = convert_karat
-                rec.gold_price      = latest_price
-                rec.making_price    = making
-                rec.product_id      = prod 
-                convert_int = float(convert_karat)
-                qty_m_karat  =  serials_qty * float(karat) 
-                if convert_karat and karat:
-                    rec.weight          = qty_m_karat / convert_int
-                
-                if rec.sale_sale == "1" and convert_karat and karat:
-                    rec.product_uom_qty =  serials_qty
-                    rec.price_unit = rec.making_price
-                    
-                   
-                elif rec.sale_sale == "2" and convert_karat and karat:
-                    
-                    rec.product_uom_qty =  serials_qty
-                    rec.price_unit = rec.making_price + latest_price
-                        # rec.update({
-                        #     'product_uom_qty':  int(convert_karat) ,
-                        #     'price_unit' : rec.making_price + latest_price
-                        # })
-   
-    
+        karat           = serials.product_id.product_tmpl_id.karat
+        making          = serials.product_id.product_tmpl_id.standard_price
+        for rec in self :
+            rec.karats          = karat
+            latest_price        = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').gold_price
+            convert_karat       = gold_p.search([('karat' , '=',rec.karats)], limit=1, order='day desc').conversion_karat
+            rec.c_karats        = convert_karat
+            rec.gold_price      = latest_price
+            rec.making_price    = making
+            rec.product_id      = prod 
+            rec.weight          = serials.weight
+            if rec.sale_sale == "1" :
+                        rec.update({
+                                'price_unit' : rec.making_price * rec.weight
+                            })
+            elif rec.sale_sale == "2" :
+                        rec.update({
+                                'price_unit' :  (rec.making_price + latest_price)* rec.weight
+                        })
 
 
     

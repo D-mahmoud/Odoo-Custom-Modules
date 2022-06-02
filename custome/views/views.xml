@@ -14,6 +14,9 @@
 
           
         </xpath>
+         <xpath expr="//field[@name='pricelist_id']" position="attributes">
+          <attribute name="required">False</attribute>
+         </xpath>
         <xpath expr="//page[@name='customer_signature']" position="after">
           <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
           <page string="Total Gold" name="total_gold" >
@@ -55,13 +58,13 @@
           <attribute name="invisible">1</attribute>
         </xpath>
 
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
           <attribute name="invisible">1</attribute>
-        </xpath>
+        </xpath> -->
 
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
           <attribute name="invisible">1</attribute>
-        </xpath>
+        </xpath> -->
 
         <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
           <attribute name="invisible">1</attribute>

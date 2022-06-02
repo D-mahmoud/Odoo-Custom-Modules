@@ -24,18 +24,19 @@ class AccountMoveLineCustom(models.Model):
     testf            = fields.Char(string="Testing")
     credit_gold      = fields.Float('Gold Cre.',digits=(12,4) ,compute='_compute_line_weight',store=True)
     debit_gold       = fields.Float('Gold De.' ,digits=(12,4) ,compute='_compute_line_weight',store=True)
-    
+    weight           = fields.Float('Weight',digits=(12,4) )
+
     @api.depends('create_date')
     def _compute_line_weight(self):
         if self.move_id.sale_mode == "1" :
             sum_qty = 0
             for roc in self :
                 if roc.account_id.id == 21 :
-                    sum_qty +=roc.quantity
+                    sum_qty +=roc.sale_line_ids.weight
                 for rec in self :
                     
                     if rec.account_id.id == 5 :
-                        rec.credit_gold = rec.quantity
+                        rec.credit_gold = rec.sale_line_ids.weight
                         
                         rec.debit_gold = 0
                     elif rec.account_id.id == 6  :

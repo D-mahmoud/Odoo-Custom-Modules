@@ -22,7 +22,7 @@ class Product(models.Model):
 
     has_stones = fields.Boolean('Stones Weight Included')
     has_stones_price = fields.Boolean('Stones Price Included')
-    product_type_name = fields.Many2one(string='Product Stone Type',comodel_name='product.type')
+    # product_type_name = fields.Many2one(string='Product Stone Type',comodel_name='product.type')
     item_cat = fields.Selection([
         ('1', 'Gold'),('2', 'Stone')
     ], string='Item Category')

@@ -6,7 +6,7 @@ import itertools
 from decimal import Decimal
 
 
-class SaleOrder(models.Model):
+class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
     sale_mode   = fields.Selection([('1', 'Fixed'),('2', 'Daily')],string="Sale Base")
     k9          = fields.Float(string='Karat 9k Weight  (G)',compute='_compute_line_weight',store= True)
@@ -101,9 +101,10 @@ class SaleOrder(models.Model):
     #         return {'domain': {'product_id': [('partner_id', '=', rec.saller_ids.name)]}}
    
         
-class SaleOrderLine(models.Model):
+class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
     
+    serial          = fields.Char(string='Serial'   )
     sale_sale       = fields.Char(string="mode")
     available       = fields.Boolean(default=True)
     net_weight      = fields.Float('Weight',digits=(12,4) )
@@ -120,8 +121,8 @@ class SaleOrderLine(models.Model):
     def onchange_partner_id(self):
         return {'domain': {'product_id': [('seller_ids.name', '=',self.partner_id.id)]}}
    
-           
-    @api.onchange('product_id','product_qty')
+    
+    @api.onchange('product_id','weight')
     def product_change(self):
         self.sale_sale  = self.order_id.sale_mode
         gold_p          = self.env['gold.price']
@@ -129,7 +130,18 @@ class SaleOrderLine(models.Model):
         product_product = self.env['product.product'].search([('id', '=', prod)]).product_tmpl_id
         karat           = product_product.karat
         making          = product_product.standard_price
+        product_serial = self.env['stock.production.lot'].search([('name', '=', self.serial)])
 
+        if prod and self.serial and not product_serial   :
+            for rec in self:
+                
+                    self.env['stock.production.lot'].create({
+                        'name': self.serial,
+                        'product_id': prod,
+                        'weight'    : self.weight,
+                        'company_id': self.env.company.id,
+                    })  
+        
         
         for rec in self:
                 rec.karats          = karat
@@ -142,16 +154,23 @@ class SaleOrderLine(models.Model):
                 serials_qty         = rec.product_qty
                 convert_int = float(convert_karat)
                 qty_m_karat  =  serials_qty * float(karat) 
-                if convert_karat and karat:
-                    rec.weight          = qty_m_karat / convert_int
+                # if convert_karat and karat:
+                #     rec.weight          = qty_m_karat / convert_int
                 
                 if rec.sale_sale == "1" :
                     
                     rec.update({
-                            'price_unit' : rec.making_price 
+                            'price_unit' : rec.making_price * rec.weight
                         })
                 elif rec.sale_sale == "2" :
                     rec.update({
-                            'price_unit' :  rec.making_price + latest_price
+                            'price_unit' :  (rec.making_price + latest_price)* rec.weight
                      })
+   
+                    
+   
                      
+class Serial(models.Model):
+    _inherit = 'stock.production.lot'
+    
+    weight          = fields.Float('Weight',digits=(12,4) )
