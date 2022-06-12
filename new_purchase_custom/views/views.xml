@@ -1,37 +1,6 @@
 <odoo>
   <data>
-    <record model="ir.ui.view" id="purchase_order_view_inherit">
-      <field name="name">purchase.order.view.inherit1</field>
-      <field name="model">purchase.order</field>
-      <field name="inherit_id" ref="purchase.purchase_order_form"/>
-      <field name="arch" type="xml">
-        <xpath expr="//div[@name='reminder']" position="after">
-          
-          <field name="sale_mode" invisible="0"/>
 
-
-        </xpath>
-         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="before">
-          <field name="serial"/>
-          <field name="cost_price_gold" invisible="1"/>
-          
-        </xpath>
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-          <attribute name="readonly">0</attribute>
-        </xpath>
-
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
-          <attribute name="readonly">0</attribute>
-        </xpath>
-
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-          <attribute name="readonly">0</attribute>
-        </xpath>
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
-          <attribute name="readonly">0</attribute>
-        </xpath>
-      </field>
-    </record>
 
   </data>
 </odoo>

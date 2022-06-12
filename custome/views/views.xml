@@ -7,9 +7,11 @@
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_order_form"/>
       <field name="arch" type="xml">
+        
         <xpath expr="//field[@name='payment_term_id']" position="after">
           <field name="sale_mode"/>
-
+          <field name="sale_categ"/>
+          <field name="field_invis" invisible="1"/>
           <field name="tesxt" invisible="1"/>
 
           
@@ -19,7 +21,7 @@
          </xpath>
         <xpath expr="//page[@name='customer_signature']" position="after">
           <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
-          <page string="Total Gold" name="total_gold" >
+          <page string="Total Gold" name="total_gold" attrs="{'invisible':[('field_invis', '=' ,False)]}">
             <group>
  
             <group>
@@ -51,33 +53,41 @@
         </xpath>
 
        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
-          <field name="making_price" readonly="1" force_save="1"/>
+          <field name="making_price" readonly="1" force_save="1"  attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
         </xpath>
 
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
-          <attribute name="invisible">1</attribute>
-        </xpath>
+        
 
-        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-          <attribute name="invisible">1</attribute>
-        </xpath> -->
-
-        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-          <attribute name="invisible">1</attribute>
-        </xpath> -->
-
-        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
-          <attribute name="invisible">1</attribute>
-        </xpath> -->
 
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
-          <field name="karats" readonly="1" force_save="1"/>
-          <field name="c_karats" readonly="1" force_save="1"/>
+          <field name="karats" readonly="1" force_save="1"  attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
+          <field name="c_karats" readonly="1" force_save="1"  attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
 
           <field name="sale_sale" invisible="1"/>
 
-          <field name="gold_price"  readonly="1" force_save="1"/>
-          <field name="weight"  readonly="1" force_save="1"/>
+          <field name="gold_price"  readonly="1" force_save="1" attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
+          <field name="weight"  readonly="1" force_save="1"  attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
+        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+          <attribute name="readonly">1</attribute>
+
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+          <attribute name="readonly">1</attribute>
+          <attribute name="force_save">1</attribute>
+        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+          <attribute name="readonly">1</attribute>
+        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
+          <attribute name="readonly">1</attribute>
+        </xpath>
+         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+          <attribute name="readonly">1</attribute>
         </xpath>
       </field>
     </record>
@@ -93,67 +103,6 @@
         
       </field>
     </record> 
-<!-- 
-    <record model="ir.ui.view" id="purchase_order_view_inherit">
-      <field name="name">purchase.order.view.inherit1</field>
-      <field name="model">purchase.order</field>
-      <field name="inherit_id" ref="purchase.purchase_order_form"/>
-      <field name="arch" type="xml">
-
-        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="before">
-          <field name="karats" readonly="1" force_save="1" />
-          <field name="gold_price" readonly="1" force_save="1" />
-
-        </xpath>
-        
-    <xpath expr="//field[@name='tax_totals_json']" position="before">
-      <field name="tax_karat_json"   />
-
-
-  </xpath>
-    </field>
-  </record> -->
-
-  <!-- <template id="report_header_karat" inherit_id="report_purchaseorder_document">
-    <xpath expr="//div[@class='header']" position="replace">
-        <div class ="header">
-            Your Code
-        </div>
-    </xpath>
-</template> -->
-
-    <!-- <record model="ir.ui.view" id="gold_payment_cust_form1">
-    <field name="name">gold.payment.customer.view.inherit1</field>
-    <field name="model">gold.payment.customer</field>
-    <field name="inherit_id" ref="custome.gold_payment_cust_form"/>
-    <field name="arch" type="xml">
-
-      <xpath expr="//sheet" position="inside">
-        <separator string="Payment Info" colspan="2"/>
-
-        <field name="customer"/>
-        <field name="product"/>
-        <field name="warehouse"/>
-        <field name="debit_qty"/>
-        <field name="credit_qty"/>
-      </xpath>
-    </field>
-</record> -->
-    <!-- <record model="ir.ui.view" id="product_view_inherit3">
-    <field name="name">product.view.inherit</field>
-    <field name="model">product.template</field>
-    <field name="inherit_id" ref="product.product_template_only_form_view"/>
-    <field name="arch" type="xml">
-      <xpath expr="//field[@name='barcode']" position="after">
-        <field name="karat" />
-        <field name="has_stones"/>
-        <field name="has_stones_price"/>
-        
-
-      </xpath>
-    </field>
-  </record> -->
-
 
 
 

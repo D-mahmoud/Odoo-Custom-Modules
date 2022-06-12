@@ -5,16 +5,17 @@
       <field name="model">purchase.order</field>
       <field name="inherit_id" ref="purchase.purchase_order_form"/>
       <field name="arch" type="xml">
-        <xpath expr="//div[@name='date_planned_div']" position="after">
-          <field name="sale_mode"/>
+        <xpath expr="//field[@name='currency_id']" position="after">
+          <field name="sale_categ"/>
+          <field name="field_invis" invisible="1"/>
 
-          <field name="tesxt" invisible="1"/>
-
-          
         </xpath>
+        <xpath expr="//div[@name='date_planned_div']" position="after">
+           <field name="sale_mode"/>
+        </xpath>
+
         <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
-          <!-- attrs="{'invisible': [('require_signature', '=', False)]}" -->
-          <page string="Total Gold" name="total_gold" >
+          <page string="Total Gold" name="total_gold" attrs="{'invisible':[('field_invis', '=' ,False)]}">
             <group>
  
             <group>
@@ -26,73 +27,68 @@
               <field name="k21"/>
               <field name="k22"/>
               <field name="k24"/>
-
-
- 
-                </group>
-                <group>
-                <!-- karat f -->
-                  <field name="c_karat"  readonly="1" force_save="1" />
-                  
-
-
-                </group>
+            </group>
+            <group>
+              <field name="c_karat"  readonly="1" force_save="1" />
+            </group>
 
             </group>
         </page>
         </xpath>
        
-          <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-            <attribute name="readonly">1</attribute>
-          </xpath> -->
-         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
-          <field name="serial" force_save="1"/>
+       
+         
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+              <field name="field_invis" invisible="1"/>
+              <field name="serial" force_save="1" attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
         </xpath>
-       <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
-          <field name="making_price" readonly="1" force_save="1"/>
-        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="before">
+          <field name="serialso" attrs="{'column_invisible':['|',('parent.field_invis', '=' ,True),('parent.sale_categ', 'not in' , ('1', '2'))]}"/>
+          <field name="cost_price_gold" invisible="1"/>
 
+        </xpath>
+         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="after">
+          <field name="karats" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
+          <field name="c_karats" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
+          <field name="sale_sale" invisible="1"/>
+          <field name="gold_price"  readonly="1" force_save="1" attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
+          <field name="weight"   attrs="{'column_invisible':[('parent.field_invis','=',False)]}"/>
+         </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
+          <field name="making_price" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.field_invis','=',False)]}" />
+        </xpath>
         <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
           <attribute name="invisible">1</attribute>
         </xpath>
-        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
-          <attribute name="domain">[('seller_ids.name', '=','partner_id.id')]</attribute>
-        </xpath> -->
-        <!-- <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-          <attribute name="invisible">1</attribute>
-        </xpath> -->
+        
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+          <attribute name="readonly">0</attribute>
 
-            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="attributes">
+          <attribute name="readonly">0</attribute>
+        </xpath>
+
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+          <attribute name="readonly">1</attribute>
+          <attribute name="force_save">1</attribute>
+        </xpath>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
           <attribute name="readonly">1</attribute>
         </xpath>
 
-         <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="after">
-          <field name="karats" readonly="1" force_save="1"/>
-          <field name="c_karats" readonly="1" force_save="1"/>
-
-          <field name="sale_sale" invisible="1"/>
-
-          <field name="gold_price"  readonly="1" force_save="1"/>
-          <field name="weight"  force_save="1"/>
+        <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_qty']" position="attributes">
+          <attribute name="readonly">1</attribute>
         </xpath>
+
+        
+
       </field>
     </record>
 
 
- <record model="ir.ui.view" id="stock_view_inherit">
-      <field name="name">stock.view.inherit</field>
-      <field name="model">stock.production.lot</field>
-      <field name="inherit_id" ref="stock.view_production_lot_form"/>
-      <field name="arch" type="xml">
 
-        <xpath expr="//field[@name='company_id']" position="before">
-              <field name="weight"  force_save="1"/>
-
-        </xpath>
-         
-         
-      </field>
-    </record> 
 
   </data>
 </odoo>
