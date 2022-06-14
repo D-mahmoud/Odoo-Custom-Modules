@@ -1,0 +1,109 @@
+<odoo>
+    <data>
+        <record id="purchase_form_view_inherit" model="ir.ui.view">
+            <field name="name">Tree Inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']"
+                       position="attributes">
+                    <attribute name="domain">[('seller_ids.name','=',parent.partner_id),
+                        ('purchase_ok', '=', True), '|',
+                        ('company_id', '=', False),
+                        ('company_id', '=', parent.company_id)]
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_ref']" position="after">
+                    <field name="sale_mode" widget="radio" options="{'horizontal': true}"/>
+                    <field name="return_purchase"/>
+                </xpath>
+
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']"
+                       position="before">
+                    <field name="lot_number" force_save="1" attrs="{'column_invisible':[('parent.return_purchase', '=', False)
+                    ]} "/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_unit']"
+                       position="attributes">
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='lot_number']"
+                       position="attributes">
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']"
+                       position="after">
+                    <field name="karat" force_save="1"/>
+                    <field name="category_name" force_save="1"/>
+                    <field name="price" force_save="1"/>
+                    <field name="weight_product" force_save="1"/>
+                    <field name="serial_number" attrs="{'column_invisible':[('parent.return_purchase', '=', True)]}"/>
+                </xpath>
+
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_qty']"
+                       position="after">
+                    <field name="labor_price" force_save="1"/>
+                    <!-->
+                    <field name="gold_price_total" force_save="1"/>
+                    <field name="labor_price_total" force_save="1"/>
+                    <-->
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_qty']"
+                       position="attributes">
+                    <attribute name="string">Quantity</attribute>
+
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('parent.return_purchase', '=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_packaging_qty']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_packaging_id']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_qty']"
+                       position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='price_unit']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+
+                </xpath>
+
+                <xpath expr="//field[@name='sale_mode']" position="after">
+                    <field name="karat_12" force_save="1" readonly="1"
+                           attrs="{'invisible': [('karat_12', '=', '0 G')]}"/>
+                    <field name="karat_14" force_save="1" readonly="1"
+                           attrs="{'invisible': [('karat_14', '=', '0 G')]}"/>
+                    <field name="karat_18" force_save="1" readonly="1"
+                           attrs="{'invisible': [('karat_18', '=', '0 G')]}"/>
+                    <field name="karat_21" force_save="1" readonly="1"
+                           attrs="{'invisible': [('karat_21', '=', '0 G')]}"/>
+                    <field name="karat_9" force_save="1" readonly="1"
+                           attrs="{'invisible': [('karat_9', '=', '0 G')]}"/>
+                    <field name="karat_22" force_save="1" readonly="1"
+                           attrs="{'invisible': [('karat_22', '=', '0 G')]}"/>
+                    <field name="karat_24" force_save="1" readonly="1"
+                           attrs="{'invisible': [('karat_24', '=', '0 G')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='tax_totals_json']" position="before">
+                    <field name="total_labor_vendor" readonly="1" force_save="1"/>
+                    <field name="total_21_karats" readonly="1" force_save="1" />
+                    <field name="total_price_gold" readonly="1" force_save="1" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

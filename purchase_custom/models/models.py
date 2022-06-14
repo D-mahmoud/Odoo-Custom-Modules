@@ -131,8 +131,8 @@ class PurchaseOrderOld(models.Model):
 
                 move.lot_name           = order_line.serial
                 move.lot_id             = product_serial.id
-                move.product_uom_qty    = 0
-                move.product_qty        = 0
+                # move.product_uom_qty    = 0
+                # move.product_qty        = 0
                 move.qty_done           = 1
                 move.state              = 'done'
         

@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <!--> action for payment -->
+        <record model="ir.actions.act_window" id="alaa_practice_action_window">
+            <field name="name">Alaa Practice Window</field>
+            <field name="res_model">alaapractice.model</field>
+        </record>
+
+        <menuitem name="Alaa Practice Model" id="alaapractice_list" parent="custom_alaa.menu_root"
+                  action="alaa_practice_action_window"/>
+        <record model="ir.ui.view" id="record_form_view">
+            <field name="name">Alaa</field>
+            <field name="model">alaapractice.model</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="company_id" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

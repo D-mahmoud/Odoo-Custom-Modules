@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="category_vendor_action_window">
+            <field name="name">Vendor Category Window</field>
+            <field name="res_model">vendorcategory.model</field>
+        </record>
+
+        <menuitem name="Vendor Category" id="vendorcategory_list" parent="purchase.menu_procurement_management"
+                  action="category_vendor_action_window"/>
+
+        <record model="ir.ui.view" id="vendor_category_list">
+            <field name="name">Vendor Category</field>
+            <field name="model">vendorcategory.model</field>
+            <field name="arch" type="xml">
+                <form string="Gold Vendor Payment">
+                    <sheet>
+                        <group>
+                            <field name="vendor_category_name" />
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vendor Category Tree View -->
+        <record id="vendor_category_model_form_tree_view" model="ir.ui.view">
+            <field name="name">Vendor Category</field>
+            <field name="model">vendorcategory.model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="vendor_category_name"/>
+                </tree>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

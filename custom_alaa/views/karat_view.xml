@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="karat_list">
+            <field name="name">custom-module list</field>
+            <field name="model">karat.model</field>
+            <field name="arch" type="xml">
+                <form string="Karat">
+                    <sheet>
+                        <group name="Additional Information">
+                            <field name="karat"/>
+                            <field name="karat_date"/>
+                            <field name="last_date"/>
+                            <field name="price"/>
+                            <field name="main_karat" widget="boolean_toggle"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <!-- karat Tree View -->
+        <record id="karat-model_form_tree_view" model="ir.ui.view">
+            <field name="name">Karat</field>
+            <field name="model">karat.model</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="karat"/>
+                    <field name="main_karat"/>
+                    <field name="last_date"/>
+                    <field name="karat_date"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="karat_action_window">
+            <field name="name">Karat Window</field>
+            <field name="res_model">karat.model</field>
+
+        </record>
+        <!-- Top menu item -->
+        <menuitem name="Alaa Module" id="custom_alaa.menu_root"  sequence="1"/>
+        <!--  actions -->
+        <menuitem name="Karat Window" id="custom_alaa.menu_1_list" parent="purchase.menu_purchase_products"
+                  action="karat_action_window" sequence="3"/>
+
+    </data>
+</odoo>

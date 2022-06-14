@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="vendor_form_view_inherit" model="ir.ui.view">
+            <field name="name">Form Inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="vendor_id"/>
+                    <field name="vendor_group"/>
+                    <field name="sale_mode"/>
+                </xpath>
+                <xpath expr="//field[@name='vendor_group']" position="after">
+                    <field name="labor_balance" readonly="1"/>
+                    <field name="gold_balance" readonly="1"/>
+                    <field name="gold_credit_limit" force_save="1" required="1"/>
+                    <field name="credit_limit" force_save="1" required="1"/>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
