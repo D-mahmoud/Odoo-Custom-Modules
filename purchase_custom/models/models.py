@@ -9,6 +9,8 @@ import logging
 
 class PurchaseOrderOld(models.Model):
     _inherit = 'purchase.order'
+    _logger  = logging.getLogger(__name__)
+
     sale_mode   = fields.Selection([('1', 'Fixed'),('2', 'Daily')],string="Sale Base")
     k9          = fields.Float(string='Karat 9k Weight  (G)',compute='_compute_line_weight',store= True)
     k12         = fields.Float(string='Karat 12k Weight (G)',compute='_compute_line_weight',store= True)
@@ -20,6 +22,10 @@ class PurchaseOrderOld(models.Model):
     c_karat     = fields.Float(string='Converted Karat Weight (G)',compute='_compute_line_weight',store= True)
     sale_categ  = fields.Selection([('1', 'Gold'),('2', 'Diamond')],string="Sale Category")
     field_invis     = fields.Boolean(default=False)
+    product_rec     = fields.Boolean(default=False)
+    # vals          = fields.Char('vals',readonly=True)
+    
+
     tesxt = fields.Char(string="tesxt")
 
     @api.onchange('sale_mode')
@@ -74,6 +80,7 @@ class PurchaseOrderOld(models.Model):
                     line_weight22 += line.product_uom_qty
                 elif line.karats  == "24":
                     line_weight24 += line.product_uom_qty
+                    
             purchase.k9  = line_weight9
             purchase.k12 = line_weight12
             purchase.k14 = line_weight14
@@ -84,12 +91,12 @@ class PurchaseOrderOld(models.Model):
 
             if convert_karat and karatn :
                 purchase.c_karat = (((line_weight9 * 9)/convert_karat)
-                                        +((line_weight12 * 12)/convert_karat)
-                                        +((line_weight14 * 14)/convert_karat)
-                                        +((line_weight18 * 18)/convert_karat)
-                                        +((line_weight21 * 21)/convert_karat)
-                                        +((line_weight22 * 22)/convert_karat)
-                                        +((line_weight24 * 24)/convert_karat))
+                                   +((line_weight12 * 12)/convert_karat)
+                                   +((line_weight14 * 14)/convert_karat)
+                                   +((line_weight18 * 18)/convert_karat)
+                                   +((line_weight21 * 21)/convert_karat)
+                                   +((line_weight22 * 22)/convert_karat)
+                                   +((line_weight24 * 24)/convert_karat))
 
           
     @api.onchange('order_line')
@@ -112,7 +119,24 @@ class PurchaseOrderOld(models.Model):
     # def onchange_partner_id(self):
     #     for rec in self.order_line:
     #         return {'domain': {'product_id': [('partner_id', '=', rec.saller_ids.name)]}}
-   
+    def action_set_picking(self):
+        self.picking_ids.state = 'done'
+        self.picking_ids.date_done = fields.datetime.now()
+        self.picking_ids.move_lines.state = 'done'
+        self.product_rec = True
+        for order_line in self.order_line :
+            product_move  = self.env['stock.move'].search([('purchase_line_id', '=', order_line.id)]).move_line_ids
+            for move in product_move : 
+                product_serial  = self.env['stock.production.lot'].search([('name', '=', order_line.serial)])
+
+                move.lot_name           = order_line.serial
+                move.lot_id             = product_serial.id
+                move.product_uom_qty    = 0
+                move.product_qty        = 0
+                move.qty_done           = 1
+                move.state              = 'done'
+        
+        
         
 class PurchaseOrderLineOld(models.Model):
     _inherit = 'purchase.order.line'
